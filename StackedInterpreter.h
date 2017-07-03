@@ -29,7 +29,7 @@ public:
 	StackedInterpreter();
 	virtual ~StackedInterpreter();
 
-	void openFile(std::string);
+	bool openFile(std::string);
 
 	int mathBlock();
 

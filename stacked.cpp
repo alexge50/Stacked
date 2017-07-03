@@ -24,7 +24,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int main()
+void print_help(char * name)
+{
+	printf("This program shall be used as follows:\n"
+		   "%s <filename to be interpreted> \n", name);
+}
+
+int main(int argc, char *argv[])
 {
 	printf("    Stacked  Copyright (C) 2017  alexge50\n\
 \n\
@@ -32,10 +38,22 @@ int main()
     This is free software, and you are welcome to redistribute it\n\
     under certain conditions; \n\n\n");
 
-	printf("main.stack:\n");
+	if(argc != 2)
+	{
+		print_help(argv[0]);
+		return 0;
+	}
+
+	printf("%s:\n", argv[1]);
 	StackedInterpreter interp;
 
-	interp.openFile("main.stack");
+	bool ok = interp.openFile(argv[1]);
+
+	if(ok != true)
+	{
+		printf("The file you told me to run does not exist.");
+		return 0;
+	}
 
 	while(interp.line() != true) ;
 

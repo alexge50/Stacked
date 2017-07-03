@@ -23,10 +23,12 @@ StackedInterpreter::~StackedInterpreter()
 }
 
 
-void StackedInterpreter::openFile(std::string filename)
+bool StackedInterpreter::openFile(std::string filename)
 {
 	fin = fopen(filename.c_str(), "r");
 	nextChar();
+
+	return fin != NULL;
 }
 
 bool StackedInterpreter::line()
