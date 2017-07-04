@@ -29,6 +29,8 @@ public:
 	StackedInterpreter();
 	virtual ~StackedInterpreter();
 
+	void init();
+
 	bool openFile(std::string);
 
 	int mathBlock();
@@ -43,6 +45,7 @@ private:
 	void popInstruction();
 	void pushInstruction();
 	void resetInstruction();
+	void signalInstruction();
 
 	/*more parsing functions*/
 	std::string string();

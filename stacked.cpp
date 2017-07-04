@@ -20,6 +20,9 @@
 #include <iostream>
 
 #include "StackedInterpreter.h"
+#include "StackedLanguageManager.h"
+
+#include "Signals.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -38,6 +41,8 @@ int main(int argc, char *argv[])
     This is free software, and you are welcome to redistribute it\n\
     under certain conditions; \n\n\n");
 
+
+
 	if(argc != 2)
 	{
 		print_help(argv[0]);
@@ -46,6 +51,7 @@ int main(int argc, char *argv[])
 
 	printf("%s:\n", argv[1]);
 	StackedInterpreter interp;
+	interp.init();
 
 	bool ok = interp.openFile(argv[1]);
 

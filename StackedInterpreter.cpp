@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <ctype.h>
 
+#include "Signals.h"
+
 StackedInterpreter::StackedInterpreter()
 {
 	// TODO Auto-generated constructor stub
@@ -22,6 +24,11 @@ StackedInterpreter::~StackedInterpreter()
 	// TODO Auto-generated destructor stub
 }
 
+void StackedInterpreter::init()
+{
+	manager.addSignal<OutputSignal>("print");
+	manager.addSignal<DebugSignal>("debug");
+}
 
 bool StackedInterpreter::openFile(std::string filename)
 {
@@ -66,6 +73,10 @@ bool StackedInterpreter::line()
 	else if(x == '+')
 	{
 		this->pushInstruction();
+	}
+	else if(x == '!')
+	{
+		this->signalInstruction();
 	}
 
 	removeSpaces();
@@ -133,6 +144,15 @@ void StackedInterpreter::resetInstruction()
 	manager.resetStack(name);
 }
 
+void StackedInterpreter::signalInstruction()
+{
+	nextChar();
+	removeSpaces();
+
+	std::string name = string();
+
+	manager.signal(name);
+}
 
 /*more parsing functions*/
 std::string StackedInterpreter::string()

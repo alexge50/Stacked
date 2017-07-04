@@ -20,27 +20,26 @@
 #ifndef MYLANG_H_
 #define MYLANG_H_
 
+//#include "Signal.h"
+
 #include <map>
 #include <vector>
 #include <string>
 
+class Signal;
+
 // this is the class that is my language
 class StackedLanguageManager
 {
+public:
 	struct Stack
 	{
 		std::vector<int> stack;
 		int i;
 
-		Stack() { i = 0; };
+		Stack();
 
-		int nextElement()
-		{
-			if(i < stack.size())
-				return stack[i--];
-			else
-				return -1;
-		}
+		int nextElement();
 	};
 public:
 	StackedLanguageManager();
@@ -57,18 +56,30 @@ public:
 
 	/*functions operations*/
 	void call(std::string); //unavailable
-	void signal(std::string); //unavailable
+	void signal(std::string);
 
 	/* utility functions */
 	void addCall(std::string); //unavailable
-	void addSignal(std::string); //unavailable
+
+	template<typename T>
+	void addSignal(std::string name)
+	{
+			m_signalMap[name] = configureSignal((Signal*) new T());
+	}
 
 
 	/* Interpreter Utilities */
 	bool isInMemory(std::string);
+
+
 private:
 	//this is memory space of the language
-	std::map<std::string, Stack> m_memorySpace;
+	std::map<std::string, Stack*> m_memorySpace;
+	std::map<std::string, Signal*> m_signalMap;
+
+	Signal* configureSignal(Signal*);
+
+	friend class Signal;
 };
 
 #endif /* MYLANG_H_ */
