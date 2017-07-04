@@ -1,12 +1,37 @@
 # Stacked
 A simple esoteric programming language, inspired from brainfuck. The only data structure that can be used are stacks.
 ## Syntax
-The syntax of ** Stacked ** is simple. It contains the following isntructions:  
+The syntax of ** Stacked ** is simple. It contains the following intructions:  
 * `% <name>` - creates a new stacks with the name `<name>`
 * `- <name>` - pops the top of the stack named `<name>`
 * `+ <name> <value>` - pushes the `<value>` into the stack named `<name>`
 * `" <name>` - this instruction acts like pop, but it returns a value, and it changes the top to be the next element after the last pop. It works on the stack called `<name>`
 * `? <name>` - this instruction resets the top pointer of the previous instruction. It works on the stack called `<name>`
+* `! <name>` - this instruction calls a "signal" which is, in fact, a internal module that has effects, either on the memory space or what interpreter can access.
+The only defined signals at the moment are: `debug` and `print`
+`debug` does nothing (not yet implemented)
+`print` it prints the content from predefined `output` stack. Example:  
+```
++ output (33)
+
++ output (100)
++ output (108)
++ output (114)
++ output (111)
++ output (87)
+
++ output (32)
+
++ output (111)
++ output (108)
++ output (108)
++ output (101)
++ output (72)
+
+! print
+```
+This would print: `Hello World!`. There is no support for string or characters.  
+
 Blocks:  
  * The only block available is math block. The math block is used to process an expression. A math block's syntax is: `( "expression" )`. The only instruction usable inside this block is `"`. An example of this block being used is:
  ```
