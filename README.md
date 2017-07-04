@@ -54,5 +54,5 @@ It should be:
  There is no support for printing. The only ways to print are by using the instruction `"` on a line. Or a math block on a line.  
 
 Upcoming features:
-  * a proper way to print
   * if and while blocks
+  * function calls (ie. call a set of instruction from another file)
