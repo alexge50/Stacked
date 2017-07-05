@@ -78,6 +78,18 @@ bool StackedInterpreter::line()
 	{
 		this->signalInstruction();
 	}
+	else if(x == '>')
+	{
+		printf("%d\n", this->greaterThanInstruction());
+	}
+	else if(x == '<')
+	{
+		printf("%d\n", this->lessThanInstruction());
+	}
+	else if(x == '=')
+	{
+		printf("%d\n", this->equalInstruction());
+	}
 
 	removeSpaces();
 
@@ -152,6 +164,42 @@ void StackedInterpreter::signalInstruction()
 	std::string name = string();
 
 	manager.signal(name);
+}
+
+bool StackedInterpreter::greaterThanInstruction()
+{
+	nextChar();
+	removeSpaces();
+
+	std::string name1 = string();
+	removeSpaces();
+	std::string name2 = string();
+
+	return manager.greaterThanOperation(name1, name2);
+}
+
+bool StackedInterpreter::lessThanInstruction()
+{
+	nextChar();
+	removeSpaces();
+
+	std::string name1 = string();
+	removeSpaces();
+	std::string name2 = string();
+
+	return manager.lessThanOperation(name1, name2);
+}
+
+bool StackedInterpreter::equalInstruction()
+{
+	nextChar();
+	removeSpaces();
+
+	std::string name1 = string();
+	removeSpaces();
+	std::string name2 = string();
+
+	return manager.equalOperation(name1, name2);
 }
 
 /*more parsing functions*/

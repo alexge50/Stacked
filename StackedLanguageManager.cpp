@@ -58,6 +58,22 @@ void StackedLanguageManager::pushStack(std::string name, int value)
 	m_memorySpace[name]->i = m_memorySpace[name]->stack.size() - 1;
 }
 
+bool StackedLanguageManager::greaterThanOperation(std::string name1, std::string name2)
+{
+	return m_memorySpace[name1]->top() > m_memorySpace[name2]->top();
+}
+
+bool StackedLanguageManager::lessThanOperation(std::string name1, std::string name2)
+{
+	return m_memorySpace[name1]->top() < m_memorySpace[name2]->top();
+}
+
+bool StackedLanguageManager::equalOperation(std::string name1, std::string name2)
+{
+	return m_memorySpace[name1]->top() == m_memorySpace[name2]->top();
+}
+
+
 bool StackedLanguageManager::isInMemory(std::string name)
 {
 	return m_memorySpace.find(name) != m_memorySpace.end();
@@ -95,6 +111,14 @@ int StackedLanguageManager::Stack::nextElement()
 {
 	if(i < stack.size())
 		return stack[i--];
+	else
+		return -1;
+}
+
+int StackedLanguageManager::Stack::top()
+{
+	if(stack.size() != 0)
+		return stack[stack.size() - 1];
 	else
 		return -1;
 }

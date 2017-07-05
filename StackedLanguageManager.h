@@ -40,6 +40,7 @@ public:
 		Stack();
 
 		int nextElement();
+		int top();
 	};
 public:
 	StackedLanguageManager();
@@ -53,6 +54,10 @@ public:
 	void resetStack(std::string);
 	void popStack(std::string);
 	void pushStack(std::string, int value);
+
+	bool greaterThanOperation(std::string, std::string);
+	bool lessThanOperation(std::string, std::string);
+	bool equalOperation(std::string, std::string);
 
 	/*functions operations*/
 	void call(std::string); //unavailable

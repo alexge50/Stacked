@@ -47,6 +47,10 @@ private:
 	void resetInstruction();
 	void signalInstruction();
 
+	bool greaterThanInstruction();
+	bool lessThanInstruction();
+	bool equalInstruction();
+
 	/*more parsing functions*/
 	std::string string();
 	int number();
