@@ -224,22 +224,23 @@ int StackedInterpreter::expression()
 int StackedInterpreter::term()
 {
 	int f1 = 1, f2 = 1;
-	int sign = 1;
+	int sign = '*';
 
 	removeSpaces();
 	f1 = factor();
 	removeSpaces();
-	if(currentChar == '*' || currentChar == '/')
+	if(currentChar == '*' || currentChar == '/' || currentChar == '%')
 	{
-		sign = currentChar == '*' ? 1 : -1;
+		sign = currentChar;
 		nextChar();
 		removeSpaces();
 		f2 = factor();
 	}
 
-	if(sign == 1)
+	if(sign == '*')
 		return f1 * f2;
-	else if(sign == -1) return f1 / f2;
+	else if(sign == '/') return f1 / f2;
+	else if(sign == '%') return f1 % f2;
 
 	return 0;
 }
