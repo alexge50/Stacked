@@ -157,7 +157,6 @@ void StackedInterpreter::whileBlock()
 		}
 		else
 		{
-			printf("jumped\n");
 			fseek(fin, whileBlockEndPosition, SEEK_SET);
 			nextChar();
 		}
