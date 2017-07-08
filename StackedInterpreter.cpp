@@ -60,7 +60,8 @@ bool StackedInterpreter::line()
 	}
 	else if(x == '"')
 	{
-		printf("%d\n", this->nextInstruction());
+		//printf("%d\n", this->nextInstruction());
+		this->nextInstruction();
 	}
 	else if(x == '?')
 	{
@@ -80,15 +81,26 @@ bool StackedInterpreter::line()
 	}
 	else if(x == '>')
 	{
-		printf("%d\n", this->greaterThanInstruction());
+		//printf("%d\n", this->greaterThanInstruction());
+		this->greaterThanInstruction();
 	}
 	else if(x == '<')
 	{
-		printf("%d\n", this->lessThanInstruction());
+		//printf("%d\n", this->lessThanInstruction());
+		this->lessThanInstruction();
 	}
 	else if(x == '=')
 	{
-		printf("%d\n", this->equalInstruction());
+		//printf("%d\n", this->equalInstruction());
+		this->equalInstruction();
+	}
+	else if(x == '[')
+	{
+		whileBlock();
+	}
+	else if(x == '{')
+	{
+		ifBlock();
 	}
 
 	removeSpaces();
@@ -99,6 +111,114 @@ bool StackedInterpreter::line()
 int StackedInterpreter::mathBlock()
 {
 	return expression();
+}
+
+void StackedInterpreter::whileBlock()
+{
+	whileBlockStartPosition = ftell(fin);
+	readUntil(']');
+	whileBlockEndPosition = ftell(fin);
+
+
+	fseek(fin, whileBlockStartPosition, SEEK_SET);
+
+	nextChar();
+	removeSpaces();
+
+	if(currentChar == ':')
+	{
+		nextChar();
+		removeSpaces();
+
+		char x = currentChar;
+		int value;
+
+		if(x == '>')
+			value = this->greaterThanInstruction();
+		else if(x == '<')
+			value = this->lessThanInstruction();
+		else if(x == '=')
+			value = this->equalInstruction();
+
+		removeSpaces();
+		if(currentChar != ':')
+			return;
+		nextChar();
+		removeSpaces();
+
+		if(value == 1)
+		{
+			while(currentChar != ']')
+			{
+				line();
+			}
+			fseek(fin, whileBlockStartPosition, SEEK_SET);
+			currentChar = '[';
+		}
+		else
+		{
+			printf("jumped\n");
+			fseek(fin, whileBlockEndPosition, SEEK_SET);
+			nextChar();
+		}
+	}
+	else
+	{
+		printf("expected condition\n");
+	}
+}
+
+void StackedInterpreter::ifBlock()
+{
+	ifBlockStartPosition = ftell(fin);
+	readUntil('}');
+	ifBlockEndPosition = ftell(fin);
+
+
+	fseek(fin, ifBlockStartPosition, SEEK_SET);
+
+	nextChar();
+	removeSpaces();
+
+	if(currentChar == ':')
+	{
+		nextChar();
+		removeSpaces();
+
+		char x = currentChar;
+		int value;
+
+		if(x == '>')
+			value = this->greaterThanInstruction();
+		else if(x == '<')
+			value = this->lessThanInstruction();
+		else if(x == '=')
+			value = this->equalInstruction();
+
+		removeSpaces();
+		if(currentChar != ':')
+			return;
+		nextChar();
+		removeSpaces();
+
+		if(value == 1)
+		{
+			while(currentChar != '}')
+			{
+				line();
+			}
+			nextChar();
+		}
+		else
+		{
+			fseek(fin, ifBlockEndPosition, SEEK_SET);
+			nextChar();
+		}
+	}
+	else
+	{
+		printf("expected condition\n");
+	}
 }
 
 
@@ -320,6 +440,12 @@ int StackedInterpreter::factor()
 void StackedInterpreter::removeSpaces()
 {
 	while(currentChar == ' ' || currentChar == '\t' || currentChar == '\n')
+		nextChar();
+}
+
+void StackedInterpreter::readUntil(char c)
+{
+	while(currentChar != c)
 		nextChar();
 }
 

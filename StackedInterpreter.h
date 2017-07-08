@@ -34,6 +34,8 @@ public:
 	bool openFile(std::string);
 
 	int mathBlock();
+	void whileBlock();
+	void ifBlock();
 
 	bool line();// parse a line
 
@@ -60,13 +62,25 @@ private:
 	int factor();
 
 	void removeSpaces();
+	void readUntil(char c);
 
 private:
+	std::string buffer;
 	FILE *fin;
 	volatile char currentChar;
 	volatile int numberCharRead;
+	char lastChar;
+	int positionInBuffer;
 	void nextChar();
 
+private:
+	/* for while block*/
+	long int whileBlockStartPosition;
+	long int whileBlockEndPosition;
+
+	/* for if block*/
+	long int ifBlockStartPosition;
+	long int ifBlockEndPosition;
 private:
 	StackedLanguageManager manager;
 };
