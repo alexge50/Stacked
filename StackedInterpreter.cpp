@@ -27,6 +27,7 @@ StackedInterpreter::~StackedInterpreter()
 void StackedInterpreter::init()
 {
 	manager.addSignal<OutputSignal>("print");
+	manager.addSignal<InputSignal>("scan");
 	manager.addSignal<DebugSignal>("debug");
 }
 

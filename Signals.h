@@ -44,6 +44,31 @@ public:
 	}
 };
 
+class InputSignal: Signal
+{
+public:
+	virtual void init() override
+	{
+		makeStack("input");
+	}
+
+	virtual void main() override
+	{
+		StackedLanguageManager::Stack *input = getStack("input");
+		char buffer[1000];
+		int i = 0;
+
+		scanf("%s", buffer);
+
+		while(buffer[i] != '\0')
+		{
+			input->stack.push_back((int)(buffer[i]));
+			i++;
+		}
+
+	}
+};
+
 class DebugSignal: Signal
 {
 public:
