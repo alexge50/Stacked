@@ -33,7 +33,7 @@ The only defined signals at the moment are: `debug` and `print`
 This would print: `Hello World!`. There is no support for string or characters.  
 
 Blocks:  
- * The only block available is math block. The math block is used to process an expression. A math block's syntax is: `( "expression" )`. The only instruction usable inside this block is `"`. An example of this block being used is:
+ * `math block` - The math block is used to process an expression. A math block's syntax is: `( "expression" )`. The only instruction usable inside this block is `"`. An example of this block being used is:
  ```
  + stack ((70 - 50) + 30 / (" stack))
  ```
@@ -51,8 +51,45 @@ It should be:
  ```
  __In parsing, there is no support for negative numbers, instead of writing `-50` the `(0 - 50)` should be written.__
  
- There is no support for printing. The only ways to print are by using the instruction `"` on a line. Or a math block on a line.  
+ * `if block` - the syntax for if is as follows:
+ ```
+ { : (comparation instruction) :
+  instructions
+ }
+ ```
+ * `while block` - the syntax for while is as follows:
+ ```
+ [ : (comparation instruction) :
+  instructions
+ ]
+ ```
+The only limit of if and while block is that in a while block can't be another while block. Same for if block.
+For instance:
+```
+{ : = a b :
+  { : > c b :
+  }
+}
+```
+```
+[ : = a b :
+  [ : > c b :
+  ]
+]
+```
+```
+{ : = a b :
+  [ : > c b :
+    { : < d c :
+    
+    }
+  ]
+}
+```
+are not allowed.  
+
+But if inside while and vice versa is allowed.  
 
 Upcoming features:
-  * if and while blocks
   * function calls (ie. call a set of instruction from another file)
+  * better solution for if and while blocks
