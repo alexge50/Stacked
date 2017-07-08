@@ -60,6 +60,8 @@ public:
 
 		scanf("%s", buffer);
 
+		input->stack.push_back( -1 );
+
 		while(buffer[i] != '\0')
 		{
 			input->stack.push_back((int)(buffer[i]));
