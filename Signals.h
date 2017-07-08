@@ -22,6 +22,8 @@
 
 #include "Signal.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string>
 
 class OutputSignal: Signal
 {
@@ -70,6 +72,31 @@ public:
 
 	}
 };
+
+class SyscallSignal: Signal
+{
+public:
+
+	virtual void init() override
+	{
+		makeStack("system");
+	}
+
+	virtual void main() override
+	{
+		StackedLanguageManager::Stack *_syscall = getStack("system");
+		std::string callString;
+
+		for(int i = _syscall->stack.size() - 1; i >= 0; i--)
+		{
+			callString = callString + (char)_syscall->stack[i];
+			_syscall->stack.pop_back();
+		}
+
+		system(callString.c_str());
+	}
+};
+
 
 class DebugSignal: Signal
 {
