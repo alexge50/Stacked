@@ -1,8 +1,16 @@
-% aStack
-+ aStack (90)
-+ aStack (70)
-+ aStack (100)
+% number
+% zero
 
-" aStack
-- aStack
-" aStack
++ number (655254)
++ zero (0)
+
++ output (10)
+
+[ : > number zero :
+	? number
+	+ output ((" number) % 10 + 48)
+	? number
+	+ number ((" number) / 10)
+]
+! print
+
