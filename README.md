@@ -92,4 +92,5 @@ But if inside while and vice versa is allowed.
 
 Upcoming features:
   * function calls (ie. call a set of instruction from another file)
+  * a better error log
   * better solution for if and while blocks
