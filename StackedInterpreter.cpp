@@ -14,9 +14,7 @@
 StackedInterpreter::StackedInterpreter()
 {
 	// TODO Auto-generated constructor stub
-	numberCharRead = 0;
-	fin = NULL;
-	currentChar = 0;
+	stream = NULL;
 }
 
 StackedInterpreter::~StackedInterpreter()
@@ -32,19 +30,16 @@ void StackedInterpreter::init()
 	manager.addSignal<DebugSignal>("debug");
 }
 
-bool StackedInterpreter::openFile(std::string filename)
+void StackedInterpreter::setStream(IStream* s)
 {
-	fin = fopen(filename.c_str(), "r");
-	nextChar();
-
-	return fin != NULL;
+	stream = s;
 }
 
 bool StackedInterpreter::line()
 {
 	char x;
 	removeSpaces();
-	x = currentChar;
+	x = stream->GetCurrentByte();
 
 	if(x == EOF)
 		return 1;
@@ -117,22 +112,21 @@ int StackedInterpreter::mathBlock()
 
 void StackedInterpreter::whileBlock()
 {
-	whileBlockStartPosition = ftell(fin);
+	whileBlockStartPosition = stream->GetCurrentPosition();
 	readUntil(']');
-	whileBlockEndPosition = ftell(fin);
+	whileBlockEndPosition = stream->GetCurrentPosition();
 
+	stream->SetPosition(whileBlockStartPosition);
 
-	fseek(fin, whileBlockStartPosition, SEEK_SET);
-
-	nextChar();
+	stream->Advance();
 	removeSpaces();
 
-	if(currentChar == ':')
+	if(stream->GetCurrentByte() == ':')
 	{
-		nextChar();
+		stream->Advance();
 		removeSpaces();
 
-		char x = currentChar;
+		char x = stream->GetCurrentByte();
 		int value;
 
 		if(x == '>')
@@ -143,24 +137,24 @@ void StackedInterpreter::whileBlock()
 			value = this->equalInstruction();
 
 		removeSpaces();
-		if(currentChar != ':')
+		if(stream->GetCurrentByte() != ':')
 			return;
-		nextChar();
+		stream->Advance();
 		removeSpaces();
 
 		if(value == 1)
 		{
-			while(currentChar != ']')
+			while(stream->GetCurrentByte() != ']')
 			{
 				line();
 			}
-			fseek(fin, whileBlockStartPosition, SEEK_SET);
-			currentChar = '[';
+			stream->SetPosition(whileBlockStartPosition);
+
 		}
 		else
 		{
-			fseek(fin, whileBlockEndPosition, SEEK_SET);
-			nextChar();
+			stream->SetPosition(whileBlockEndPosition);
+			stream->Advance();
 		}
 	}
 	else
@@ -171,22 +165,21 @@ void StackedInterpreter::whileBlock()
 
 void StackedInterpreter::ifBlock()
 {
-	ifBlockStartPosition = ftell(fin);
+	ifBlockStartPosition = stream->GetCurrentPosition();
 	readUntil('}');
-	ifBlockEndPosition = ftell(fin);
+	ifBlockEndPosition = stream->GetCurrentPosition();
 
+	stream->SetPosition(ifBlockStartPosition);
 
-	fseek(fin, ifBlockStartPosition, SEEK_SET);
-
-	nextChar();
+	stream->Advance();
 	removeSpaces();
 
-	if(currentChar == ':')
+	if(stream->GetCurrentByte() == ':')
 	{
-		nextChar();
+		stream->Advance();
 		removeSpaces();
 
-		char x = currentChar;
+		char x = stream->GetCurrentByte();
 		int value;
 
 		if(x == '>')
@@ -197,23 +190,23 @@ void StackedInterpreter::ifBlock()
 			value = this->equalInstruction();
 
 		removeSpaces();
-		if(currentChar != ':')
+		if(stream->GetCurrentByte() != ':')
 			return;
-		nextChar();
+		stream->Advance();
 		removeSpaces();
 
 		if(value == 1)
 		{
-			while(currentChar != '}')
+			while(stream->GetCurrentByte() != '}')
 			{
 				line();
 			}
-			nextChar();
+			stream->Advance();
 		}
 		else
 		{
-			fseek(fin, ifBlockEndPosition, SEEK_SET);
-			nextChar();
+			stream->SetPosition(ifBlockEndPosition);
+			stream->Advance();
 		}
 	}
 	else
@@ -225,7 +218,7 @@ void StackedInterpreter::ifBlock()
 
 void StackedInterpreter::newInstruction()
 {
-	nextChar();
+	stream->Advance();
 	removeSpaces();
 
 	std::string name = string();
@@ -235,7 +228,7 @@ void StackedInterpreter::newInstruction()
 
 int StackedInterpreter::nextInstruction()
 {
-	nextChar();
+	stream->Advance();
 	removeSpaces();
 
 	std::string name = string();
@@ -245,7 +238,7 @@ int StackedInterpreter::nextInstruction()
 
 void StackedInterpreter::popInstruction()
 {
-	nextChar();
+	stream->Advance();
 	removeSpaces();
 
 	std::string name = string();
@@ -255,7 +248,7 @@ void StackedInterpreter::popInstruction()
 
 void StackedInterpreter::pushInstruction()
 {
-	nextChar();
+	stream->Advance();
 	removeSpaces();
 
 	std::string name = string();
@@ -269,7 +262,7 @@ void StackedInterpreter::pushInstruction()
 
 void StackedInterpreter::resetInstruction()
 {
-	nextChar();
+	stream->Advance();
 	removeSpaces();
 
 	std::string name = string();
@@ -279,7 +272,7 @@ void StackedInterpreter::resetInstruction()
 
 void StackedInterpreter::signalInstruction()
 {
-	nextChar();
+	stream->Advance();
 	removeSpaces();
 
 	std::string name = string();
@@ -289,7 +282,7 @@ void StackedInterpreter::signalInstruction()
 
 bool StackedInterpreter::greaterThanInstruction()
 {
-	nextChar();
+	stream->Advance();
 	removeSpaces();
 
 	std::string name1 = string();
@@ -301,7 +294,7 @@ bool StackedInterpreter::greaterThanInstruction()
 
 bool StackedInterpreter::lessThanInstruction()
 {
-	nextChar();
+	stream->Advance();
 	removeSpaces();
 
 	std::string name1 = string();
@@ -313,7 +306,7 @@ bool StackedInterpreter::lessThanInstruction()
 
 bool StackedInterpreter::equalInstruction()
 {
-	nextChar();
+	stream->Advance();
 	removeSpaces();
 
 	std::string name1 = string();
@@ -328,10 +321,10 @@ std::string StackedInterpreter::string()
 {
 	std::string x;
 
-	while(isalnum(currentChar))
+	while(isalnum(stream->GetCurrentByte()))
 	{
-		x = x + currentChar;
-		nextChar();
+		x = x + stream->GetCurrentByte();
+		stream->Advance();
 	}
 
 	return x;
@@ -343,10 +336,10 @@ int StackedInterpreter::number()
 	removeSpaces();
 
 
-	while(isdigit(currentChar))
+	while(isdigit(stream->GetCurrentByte()))
 	{
-		x = ( currentChar - '0' ) + x * 10;
-		nextChar();
+		x = ( stream->GetCurrentByte() - '0' ) + x * 10;
+		stream->Advance();
 	}
 
 	return x;
@@ -359,31 +352,31 @@ int StackedInterpreter::expression()
 	int t1 = 0, t2 = 0;
 	int sign = 1;
 
-	if(currentChar == '(')
-		nextChar();
+	if(stream->GetCurrentByte() == '(')
+		stream->Advance();
 	else
 	{
-		printf("syntax error %d %c\n", __LINE__, currentChar);
+		printf("syntax error %d %c\n", __LINE__, stream->GetCurrentByte());
 		return 0;
 	}
 
 	removeSpaces();
 	t1 = term();
 	removeSpaces();
-	if(currentChar == '+' || currentChar == '-')
+	if(stream->GetCurrentByte() == '+' || stream->GetCurrentByte() == '-')
 	{
-		sign = currentChar == '+' ? 1 : -1;
-		nextChar();
+		sign = stream->GetCurrentByte() == '+' ? 1 : -1;
+		stream->Advance();
 		removeSpaces();
 		t2 = term();
 	}
 
 	removeSpaces();
-	if(currentChar == ')')
-		nextChar();
+	if(stream->GetCurrentByte() == ')')
+		stream->Advance();
 	else
 	{
-		printf("syntax error %d %c\n", __LINE__, currentChar);
+		printf("syntax error %d %c\n", __LINE__, stream->GetCurrentByte());
 		//return 0;
 	}
 
@@ -398,10 +391,10 @@ int StackedInterpreter::term()
 	removeSpaces();
 	f1 = factor();
 	removeSpaces();
-	if(currentChar == '*' || currentChar == '/' || currentChar == '%')
+	if(stream->GetCurrentByte() == '*' || stream->GetCurrentByte() == '/' || stream->GetCurrentByte() == '%')
 	{
-		sign = currentChar;
-		nextChar();
+		sign = stream->GetCurrentByte();
+		stream->Advance();
 		removeSpaces();
 		f2 = factor();
 	}
@@ -417,7 +410,7 @@ int StackedInterpreter::term()
 int StackedInterpreter::factor()
 {
 	int x;
-	if(currentChar == '(')
+	if(stream->GetCurrentByte() == '(')
 	{
 		x = expression();
 	}
@@ -440,18 +433,12 @@ int StackedInterpreter::factor()
 
 void StackedInterpreter::removeSpaces()
 {
-	while(currentChar == ' ' || currentChar == '\t' || currentChar == '\n')
-		nextChar();
+	while(stream->GetCurrentByte() == ' ' || stream->GetCurrentByte() == '\t' || stream->GetCurrentByte() == '\n')
+		stream->Advance();
 }
 
 void StackedInterpreter::readUntil(char c)
 {
-	while(currentChar != c)
-		nextChar();
+	while(stream->GetCurrentByte() != c)
+		stream->Advance();
 }
-
-void StackedInterpreter::nextChar()
-{
-	currentChar = fgetc(fin);
-}
-

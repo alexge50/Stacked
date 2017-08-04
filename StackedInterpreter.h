@@ -22,6 +22,7 @@
 
 #include <string>
 #include "StackedLanguageManager.h"
+#include "Stream/IStream.h"
 
 class StackedInterpreter
 {
@@ -31,7 +32,7 @@ public:
 
 	void init();
 
-	bool openFile(std::string);
+	void setStream(IStream*);
 
 	int mathBlock();
 	void whileBlock();
@@ -65,13 +66,7 @@ private:
 	void readUntil(char c);
 
 private:
-	std::string buffer;
-	FILE *fin;
-	volatile char currentChar;
-	volatile int numberCharRead;
-	char lastChar;
-	int positionInBuffer;
-	void nextChar();
+	IStream *stream;
 
 private:
 	/* for while block*/

@@ -35,11 +35,11 @@ void print_help(char * name)
 
 int main(int argc, char *argv[])
 {
-	printf("    Stacked  Copyright (C) 2017  alexge50\n\
+	printf("Stacked  Copyright (C) 2017  alexge50\n\
 \n\
-    This program comes with ABSOLUTELY NO WARRANTY; \n\
-    This is free software, and you are welcome to redistribute it\n\
-    under certain conditions; \n\n\n");
+This program comes with ABSOLUTELY NO WARRANTY; \n\
+This is free software, and you are welcome to redistribute it\n\
+under certain conditions; \n\n\n");
 
 
 
@@ -53,7 +53,8 @@ int main(int argc, char *argv[])
 	StackedInterpreter interp;
 	interp.init();
 
-	bool ok = interp.openFile(argv[1]);
+	bool ok = true;
+	interp.setStream(NULL);
 
 	if(ok != true)
 	{
