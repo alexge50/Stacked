@@ -1,7 +1,7 @@
 COMPILER=g++
 
-DEPS  = StackedLanguageManager.h StackedLanguageManager.h Signal.h Signals.h
-OBJ = stacked.o StackedInterpreter.o StackedLanguageManager.o Signal.o
+DEPS  = StackedLanguageManager.h StackedLanguageManager.h Signal.h Signals.h Stream/FileStream.h Stream/IStream.h
+OBJ = stacked.o StackedInterpreter.o StackedLanguageManager.o Signal.o Stream/FileStream.o Stream/IStream.o
 
 all: Stacked
 
@@ -12,4 +12,4 @@ Stacked: $(OBJ)
 	gcc -std=c++11 -lstdc++ -o Stacked $(OBJ)
 
 clean:
-	rm -f *.o Stacked
+	rm -f *.o Stream/*.o Stacked
