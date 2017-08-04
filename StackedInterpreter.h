@@ -24,43 +24,45 @@
 #include "StackedLanguageManager.h"
 #include "Stream/IStream.h"
 
+#include "Abstract Syntax Tree.h"
+
 class StackedInterpreter
 {
 public:
 	StackedInterpreter();
 	virtual ~StackedInterpreter();
 
-	void init();
-
 	void setStream(IStream*);
 
-	int mathBlock();
-	void whileBlock();
-	void ifBlock();
+	Program *program();
 
-	bool line();// parse a line
+	Expression* mathBlock();
+	Instruction* whileBlock();
+	Instruction* ifBlock();
+
+	Instruction* line();// parse a line
 
 private:
 
 
-	void newInstruction();
-	int nextInstruction();
-	void popInstruction();
-	void pushInstruction();
-	void resetInstruction();
-	void signalInstruction();
+	Instruction* newInstruction();
+	Expression* nextInstruction();
+	Instruction* popInstruction();
+	Instruction* pushInstruction();
+	Instruction* resetInstruction();
+	Instruction* signalInstruction();
 
-	bool greaterThanInstruction();
-	bool lessThanInstruction();
-	bool equalInstruction();
+	Comparation* greaterThanInstruction();
+	Comparation* lessThanInstruction();
+	Comparation* equalInstruction();
 
 	/*more parsing functions*/
 	std::string string();
 	int number();
 
-	int expression();
-	int term();
-	int factor();
+	Expression* expression();
+	Expression* term();
+	Expression* factor();
 
 	void removeSpaces();
 	void readUntil(char c);

@@ -17,10 +17,13 @@
  *
  */
 
+#define DEBUG 0
+
 #include <iostream>
 
 #include "StackedInterpreter.h"
 #include "StackedLanguageManager.h"
+#include "Abstract Syntax Tree/Program.h"
 
 #include "Signals.h"
 
@@ -41,7 +44,7 @@ int main(int argc, char *argv[])
 \n\
 This program comes with ABSOLUTELY NO WARRANTY; \n\
 This is free software, and you are welcome to redistribute it\n\
-under certain conditions; \n\n\n");
+nder certain conditions; \n\n\n");
 
 
 
@@ -64,10 +67,18 @@ under certain conditions; \n\n\n");
 	}
 
 	StackedInterpreter interp;
-	interp.init();
+	StackedLanguageManager langManager;
 
 	interp.setStream(file);
-	while(interp.line() != true) ;
+	Program *program = interp.program();
+
+	langManager.addSignal<OutputSignal>("print");
+	langManager.addSignal<InputSignal>("scan");
+	langManager.addSignal<SyscallSignal>("system");
+	langManager.addSignal<DebugSignal>("debug");
+
+	program->Run(&langManager);
+
 
 	return 0;
 }

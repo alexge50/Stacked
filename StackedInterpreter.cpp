@@ -22,103 +22,96 @@ StackedInterpreter::~StackedInterpreter()
 	// TODO Auto-generated destructor stub
 }
 
-void StackedInterpreter::init()
-{
-	manager.addSignal<OutputSignal>("print");
-	manager.addSignal<InputSignal>("scan");
-	manager.addSignal<SyscallSignal>("system");
-	manager.addSignal<DebugSignal>("debug");
-}
-
 void StackedInterpreter::setStream(IStream* s)
 {
 	stream = s;
 }
 
-bool StackedInterpreter::line()
+Program* StackedInterpreter::program()
+{
+	int j = 0;
+	Program *program = new Program;
+	Instruction *i;
+	while((i = line()) != NULL)
+		program->GetInstructionBlock()->push_back(i), j ++;
+
+	//printf("this program %d has instructions\n", j);
+
+	return program;
+}
+
+Instruction* StackedInterpreter::line()
 {
 	char x;
 	removeSpaces();
 	x = stream->GetCurrentByte();
-	//printf("%c\n", x);
 
 	if(x == EOF)
-		return 1;
+		return NULL;
 
-	//printf("%c\n", currentChar);
 
 	if(x == '(')
 	{
-		//printf("here");
-		printf("%d\n", mathBlock());
+		return mathBlock();
 	}
 	else if(x == '%')
 	{
-		this->newInstruction();
+		return this->newInstruction();
 	}
 	else if(x == '"')
 	{
-		//printf("%d\n", this->nextInstruction());
-		this->nextInstruction();
+		return this->nextInstruction();
 	}
 	else if(x == '?')
 	{
-		this->resetInstruction();
+		return this->resetInstruction();
 	}
 	else if(x == '-')
 	{
-		this->popInstruction();
+		return this->popInstruction();
 	}
 	else if(x == '+')
 	{
-		this->pushInstruction();
+		return this->pushInstruction();
 	}
 	else if(x == '!')
 	{
-		this->signalInstruction();
+		return this->signalInstruction();
 	}
 	else if(x == '>')
 	{
-		//printf("%d\n", this->greaterThanInstruction());
-		this->greaterThanInstruction();
+		return this->greaterThanInstruction();
 	}
 	else if(x == '<')
 	{
-		//printf("%d\n", this->lessThanInstruction());
-		this->lessThanInstruction();
+		return this->lessThanInstruction();
 	}
 	else if(x == '=')
 	{
-		//printf("%d\n", this->equalInstruction());
-		this->equalInstruction();
+		return this->equalInstruction();
 	}
 	else if(x == '[')
 	{
-		whileBlock();
+		return whileBlock();
 	}
 	else if(x == '{')
 	{
-		ifBlock();
+		return ifBlock();
 	}
+	//else return NULL;
 
 	removeSpaces();
 
 	return 0;
 }
 
-int StackedInterpreter::mathBlock()
+Expression* StackedInterpreter::mathBlock()
 {
 	return expression();
 }
 
-void StackedInterpreter::whileBlock()
+Instruction* StackedInterpreter::whileBlock()
 {
-	whileBlockStartPosition = stream->GetCurrentPosition();
-	readUntil(']');
-	whileBlockEndPosition = stream->GetCurrentPosition();
-
-	stream->SetPosition(whileBlockStartPosition);
-
 	stream->Advance();
 	removeSpaces();
 
@@ -128,50 +121,49 @@ void StackedInterpreter::whileBlock()
 		removeSpaces();
 
 		char x = stream->GetCurrentByte();
-		int value;
+		Comparation *condition;
 
 		if(x == '>')
-			value = this->greaterThanInstruction();
+			condition = this->greaterThanInstruction();
 		else if(x == '<')
-			value = this->lessThanInstruction();
+			condition = this->lessThanInstruction();
 		else if(x == '=')
-			value = this->equalInstruction();
+			condition = this->equalInstruction();
 
 		removeSpaces();
 		if(stream->GetCurrentByte() != ':')
-			return;
+		{
+			printf("condition statement was not ended\n");
+			return NULL;
+		}
 		stream->Advance();
 		removeSpaces();
 
-		if(value == 1)
-		{
-			while(stream->GetCurrentByte() != ']')
-			{
-				line();
-			}
-			stream->SetPosition(whileBlockStartPosition);
+		While *instruction = new While();
 
-		}
-		else
+		instruction->Condition(condition);
+
+		Instruction *whileInstruction = line();
+		while(whileInstruction != NULL && stream->GetCurrentByte() != ']')
 		{
-			stream->SetPosition(whileBlockEndPosition);
-			stream->Advance();
+			instruction->GetInstructionBlock()->push_back(whileInstruction);
+			whileInstruction = line();
 		}
+		stream->Advance();
+
+		return instruction;
 	}
 	else
 	{
 		printf("expected condition\n");
+			return NULL;
 	}
+
+	return NULL;
 }
 
-void StackedInterpreter::ifBlock()
+Instruction* StackedInterpreter::ifBlock()
 {
-	ifBlockStartPosition = stream->GetCurrentPosition();
-	readUntil('}');
-	ifBlockEndPosition = stream->GetCurrentPosition();
-
-	stream->SetPosition(ifBlockStartPosition);
-
 	stream->Advance();
 	removeSpaces();
 
@@ -181,107 +173,140 @@ void StackedInterpreter::ifBlock()
 		removeSpaces();
 
 		char x = stream->GetCurrentByte();
-		int value;
+		Comparation *condition;
 
 		if(x == '>')
-			value = this->greaterThanInstruction();
+			condition = this->greaterThanInstruction();
 		else if(x == '<')
-			value = this->lessThanInstruction();
+			condition = this->lessThanInstruction();
 		else if(x == '=')
-			value = this->equalInstruction();
+			condition = this->equalInstruction();
 
 		removeSpaces();
 		if(stream->GetCurrentByte() != ':')
-			return;
+		{
+			printf("condition statement was not ended\n");
+			return NULL;
+		}
 		stream->Advance();
 		removeSpaces();
 
-		if(value == 1)
+		If *instruction = new If();
+
+		instruction->Condition(condition);
+
+		Instruction *ifInstruction = line();
+		while(ifInstruction != NULL && stream->GetCurrentByte() != ']')
 		{
-			while(stream->GetCurrentByte() != '}')
-			{
-				line();
-			}
-			stream->Advance();
+			instruction->GetInstructionBlock()->push_back(ifInstruction);
+			ifInstruction = line();
 		}
-		else
-		{
-			stream->SetPosition(ifBlockEndPosition);
-			stream->Advance();
-		}
+
+		stream->Advance();
+
+		return instruction;
+
 	}
 	else
 	{
 		printf("expected condition\n");
+			return NULL;
 	}
+
+	return NULL;
 }
 
 
-void StackedInterpreter::newInstruction()
+Instruction* StackedInterpreter::newInstruction()
 {
 	stream->Advance();
 	removeSpaces();
 
 	std::string name = string();
 
-	manager.newStack(name);
+	NewStack *instruction = new NewStack;
+
+	instruction->Argument(name);
+
+	return instruction;
 }
 
-int StackedInterpreter::nextInstruction()
+Expression* StackedInterpreter::nextInstruction()
 {
 	stream->Advance();
 	removeSpaces();
 
 	std::string name = string();
 
-	return manager.nextElement(name);
+	NextElement *instruction = new NextElement;
+
+	instruction->Argument(name);
+
+	return instruction;
 }
 
-void StackedInterpreter::popInstruction()
+
+Instruction*StackedInterpreter::popInstruction()
 {
 	stream->Advance();
 	removeSpaces();
 
 	std::string name = string();
 
-	manager.popStack(name);
+	PopStack *instruction = new PopStack;
+
+	instruction->Argument(name);
+
+	return instruction;
 }
 
-void StackedInterpreter::pushInstruction()
+Instruction* StackedInterpreter::pushInstruction()
 {
 	stream->Advance();
 	removeSpaces();
 
 	std::string name = string();
-	int x;
+	Expression *x;
 
 	removeSpaces();
 	x = mathBlock();
 
-	manager.pushStack(name, x);
+	PushStack *instruction = new PushStack;
+
+	instruction->Arguments(name, x);
+
+	return instruction;
 }
 
-void StackedInterpreter::resetInstruction()
+Instruction* StackedInterpreter::resetInstruction()
 {
 	stream->Advance();
 	removeSpaces();
 
 	std::string name = string();
 
-	manager.resetStack(name);
+	ResetStack *instruction = new ResetStack;
+
+	instruction->Argument(name);
+
+	return instruction;
 }
 
-void StackedInterpreter::signalInstruction()
+Instruction* StackedInterpreter::signalInstruction()
 {
 	stream->Advance();
 	removeSpaces();
 
 	std::string name = string();
 
-	manager.signal(name);
+	SignalInstruction *instruction = new SignalInstruction();
+
+	instruction->Argument(name);
+
+	return instruction;
 }
 
-bool StackedInterpreter::greaterThanInstruction()
+Comparation* StackedInterpreter::greaterThanInstruction()
 {
 	stream->Advance();
 	removeSpaces();
@@ -290,10 +315,14 @@ bool StackedInterpreter::greaterThanInstruction()
 	removeSpaces();
 	std::string name2 = string();
 
-	return manager.greaterThanOperation(name1, name2);
+	Comparation *instruction = new GreaterThan();
+
+	instruction->Arguments(name1, name2);
+
+	return instruction;
 }
 
-bool StackedInterpreter::lessThanInstruction()
+Comparation* StackedInterpreter::lessThanInstruction()
 {
 	stream->Advance();
 	removeSpaces();
@@ -302,10 +331,14 @@ bool StackedInterpreter::lessThanInstruction()
 	removeSpaces();
 	std::string name2 = string();
 
-	return manager.lessThanOperation(name1, name2);
+	Comparation *instruction = new LessThan();
+
+	instruction->Arguments(name1, name2);
+
+	return instruction;
 }
 
-bool StackedInterpreter::equalInstruction()
+Comparation* StackedInterpreter::equalInstruction()
 {
 	stream->Advance();
 	removeSpaces();
@@ -314,7 +347,11 @@ bool StackedInterpreter::equalInstruction()
 	removeSpaces();
 	std::string name2 = string();
 
-	return manager.equalOperation(name1, name2);
+	Comparation *instruction = new Equal();
+
+	instruction->Arguments(name1, name2);
+
+	return instruction;
 }
 
 /*more parsing functions*/
@@ -348,9 +385,9 @@ int StackedInterpreter::number()
 
 
 
-int StackedInterpreter::expression()
+Expression* StackedInterpreter::expression()
 {
-	int t1 = 0, t2 = 0;
+	Expression *t1 = NULL, *t2 = NULL;
 	int sign = 1;
 
 	if(stream->GetCurrentByte() == '(')
@@ -381,12 +418,21 @@ int StackedInterpreter::expression()
 		//return 0;
 	}
 
-	return t1 + sign * t2;
+	Expression *instruction;
+
+	if(sign == +1)
+		instruction = new Addition();
+	else if(sign == -1)
+		instruction = new Subtraction();
+
+	instruction->Operands(t1, t2);
+
+	return instruction;
 }
 
-int StackedInterpreter::term()
+Expression* StackedInterpreter::term()
 {
-	int f1 = 1, f2 = 1;
+	Expression *f1 = NULL, *f2 = NULL;
 	int sign = '*';
 
 	removeSpaces();
@@ -400,24 +446,29 @@ int StackedInterpreter::term()
 		f2 = factor();
 	}
 
-	if(sign == '*')
-		return f1 * f2;
-	else if(sign == '/') return f1 / f2;
-	else if(sign == '%') return f1 % f2;
+	Expression *instruction;
 
-	return 0;
+	if(sign == '*') instruction = new Multiplication();
+	else if(sign == '/') instruction = new Division();
+	else if(sign == '%') instruction = new Mod();
+
+	instruction->Operands(f1, f2);
+
+	return instruction;
 }
 
-int StackedInterpreter::factor()
+Expression* StackedInterpreter::factor()
 {
-	int x;
+	Expression *x;
 	if(stream->GetCurrentByte() == '(')
 	{
 		x = expression();
 	}
 	else if(isdigit(stream->GetCurrentByte()))
 	{
-		x =  number();
+		ConstNumber *y = new ConstNumber();
+		y->Number(number());
+		x = y;
 	}
 	else if(stream->GetCurrentByte() == '"')
 	{
@@ -426,7 +477,7 @@ int StackedInterpreter::factor()
 	else
 	{
 		printf("syntax error %d %c\n", __LINE__, stream->GetCurrentByte());
-		return 0;
+		return NULL;
 	}
 
 	return x;

@@ -27,20 +27,31 @@ StackedLanguageManager::~StackedLanguageManager()
 void StackedLanguageManager::newStack(std::string name)
 {
 	m_memorySpace[name] = new Stack();
+#if DEBUG == 1
+	printf("declared new stack: %s\n", name.c_str());
+#endif
 }
 
 int StackedLanguageManager::nextElement(std::string name)
 {
 	//printf("%s", name.c_str());
 	//fflush(stdout);
+	int x = m_memorySpace[name]->nextElement();
 
-	return m_memorySpace[name]->nextElement();
+#if DEBUG == 1
+	printf("requested next element from '%s', returning: %d\n", name.c_str(), x);
+#endif
+
+	return x;
 }
 
 void StackedLanguageManager::resetStack(std::string name)
 {
 	//delete m_memorySpace[name];
 	m_memorySpace[name]->i = m_memorySpace[name]->stack.size() - 1;
+#if DEBUG == 1
+	printf("resetted stack '%s'\n", name.c_str());
+#endif
 }
 
 void StackedLanguageManager::popStack(std::string name)
@@ -48,14 +59,26 @@ void StackedLanguageManager::popStack(std::string name)
 
 	m_memorySpace[name]->stack.pop_back();
 	m_memorySpace[name]->i = min(m_memorySpace[name]->i, m_memorySpace[name]->stack.size() - 1);
-	//.erase (m_memorySpace[name]->stack.end());
+#if DEBUG == 1
+	printf("popped from stack '%s'\n", name.c_str());
+#endif
 }
 
 void StackedLanguageManager::pushStack(std::string name, int value)
 {
 	//printf("%d added to %s\n", value, name.c_str());
+	if(m_memorySpace[name] == NULL)
+	{
+		printf("%s was not defined\n", name.c_str());
+		return ;
+	}
+
 	m_memorySpace[name]->stack.push_back(value);
 	m_memorySpace[name]->i = m_memorySpace[name]->stack.size() - 1;
+
+#if DEBUG == 1
+	printf("pushed %d into %s\n", value, name.c_str());
+#endif
 }
 
 bool StackedLanguageManager::greaterThanOperation(std::string name1, std::string name2)
@@ -82,6 +105,9 @@ bool StackedLanguageManager::isInMemory(std::string name)
 
 void StackedLanguageManager::signal(std::string name)
 {
+#if DEBUG == 1
+	printf("called signal: %s\n", name.c_str());
+#endif
 	m_signalMap[name]->main();
 }
 
