@@ -1,5 +1,5 @@
 # Stacked
-A simple esoteric programming language, inspired from brainfuck and assembly. The only data structure that can be used are stacks.
+A programming language made for fun, that uses aspects from brainfuck and assembly. Only stacks can be used. 
 ## Syntax
 The syntax of ** Stacked ** is simple. It contains the following intructions:  
 * `% <name>` - creates a new stacks with the name `<name>`
