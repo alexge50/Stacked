@@ -40,6 +40,7 @@ bool StackedInterpreter::line()
 	char x;
 	removeSpaces();
 	x = stream->GetCurrentByte();
+	//printf("%c\n", x);
 
 	if(x == EOF)
 		return 1;
@@ -414,17 +415,17 @@ int StackedInterpreter::factor()
 	{
 		x = expression();
 	}
-	else if(isdigit(currentChar))
+	else if(isdigit(stream->GetCurrentByte()))
 	{
 		x =  number();
 	}
-	else if(currentChar == '"')
+	else if(stream->GetCurrentByte() == '"')
 	{
 		x = nextInstruction();
 	}
 	else
 	{
-		printf("syntax error %d %c\n", __LINE__, currentChar);
+		printf("syntax error %d %c\n", __LINE__, stream->GetCurrentByte());
 		return 0;
 	}
 

@@ -24,6 +24,8 @@
 
 #include "Signals.h"
 
+#include "Stream/FileStream.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -50,11 +52,10 @@ under certain conditions; \n\n\n");
 	}
 
 	printf("%s:\n", argv[1]);
-	StackedInterpreter interp;
-	interp.init();
 
-	bool ok = true;
-	interp.setStream(NULL);
+	FileStream *file = new FileStream;
+
+	bool ok = file->OpenFile(std::string(argv[1]));
 
 	if(ok != true)
 	{
@@ -62,6 +63,10 @@ under certain conditions; \n\n\n");
 		return 0;
 	}
 
+	StackedInterpreter interp;
+	interp.init();
+
+	interp.setStream(file);
 	while(interp.line() != true) ;
 
 	return 0;
