@@ -20,7 +20,8 @@ PushStack::~PushStack()
 
 void PushStack::Run(StackedLanguageManager *manager)
 {
-	int value = m_value->Run(manager);
+	m_value->Run(manager);
+	int value = m_value->Result();
 	manager->pushStack(m_stackName, value);
 }
 
