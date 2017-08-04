@@ -1,24 +1,26 @@
 /*
- * Division.cpp
+ * Mod.cpp
  *
- *  Created on: Aug 4, 2017
+ *  Created on: Aug 5, 2017
  *      Author: alex
  */
 
-#include "Division.h"
+#include "Mod.h"
 
-Division::Division()
+#include <stdlib.h>
+
+Mod::Mod()
 {
 	// TODO Auto-generated constructor stub
 
 }
 
-Division::~Division()
+Mod::~Mod()
 {
 	// TODO Auto-generated destructor stub
 }
 
-void Division::Run(StackedLanguageManager* languageManager)
+void Mod::Run(StackedLanguageManager* languageManager)
 {
 	int left, right;
 
@@ -36,5 +38,6 @@ void Division::Run(StackedLanguageManager* languageManager)
 	}
 	else right = 1;
 
-	m_result = left / right;
+	m_result = left % right;
+
 }

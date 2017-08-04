@@ -31,7 +31,7 @@ void InstructionBlock::RunInstructionBlock(StackedLanguageManager* languageManag
 	{
 		if(m_instructionList[i] != NULL)
 			m_instructionList[i]->Run(languageManager);
-		else printf("error, <NULL> instruction");
+		else printf("error, <NULL> instruction\n");
 	}
 }
 
