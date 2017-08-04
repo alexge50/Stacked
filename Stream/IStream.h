@@ -15,11 +15,12 @@ public:
 	virtual ~IStream();
 
 public:
-	virtual char GetCurrentByte();
-	virtual void Advance();
+	virtual char GetCurrentByte() = 0;
+	virtual void Advance() = 0;
+
 public:
-	virtual int GetCurrentPosition();
-	virtual void SetPosition(unsigned long int);
+	virtual unsigned long int GetCurrentPosition() = 0;
+	virtual void SetPosition(unsigned long int) = 0;
 };
 
 #endif /* SRC_STREAM_ISTREAM_H_ */
