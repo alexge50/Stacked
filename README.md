@@ -63,32 +63,6 @@ It should be:
   instructions
  ]
  ```
-The only limit of if and while block is that in a while block can't be another while block. Same for if block.
-For instance:
-```
-{ : = a b :
-  { : > c b :
-  }
-}
-```
-```
-[ : = a b :
-  [ : > c b :
-  ]
-]
-```
-```
-{ : = a b :
-  [ : > c b :
-    { : < d c :
-    
-    }
-  ]
-}
-```
-are not allowed.  
-
-But if inside while and vice versa is allowed.  
 
 Upcoming features:
   * function calls (ie. call a set of instruction from another file)

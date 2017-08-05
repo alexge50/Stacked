@@ -23,7 +23,7 @@
 
 #include "StackedInterpreter.h"
 #include "StackedLanguageManager.h"
-#include "Abstract Syntax Tree/Program.h"
+#include "AbstractSyntaxTree/Program.h"
 
 #include "Signals.h"
 

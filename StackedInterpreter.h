@@ -24,7 +24,7 @@
 #include "StackedLanguageManager.h"
 #include "Stream/IStream.h"
 
-#include "Abstract Syntax Tree.h"
+#include "AbstractSyntaxTree.h"
 
 class StackedInterpreter
 {
