@@ -1,16 +1,15 @@
 # Stacked
 A programming language made for fun, that uses aspects from brainfuck and assembly. Only stacks can be used. 
 ## Syntax
+***To Be Updated**
+
 The syntax of ** Stacked ** is simple. It contains the following intructions:  
 * `% <name>` - creates a new stacks with the name `<name>`
 * `- <name>` - pops the top of the stack named `<name>`
 * `+ <name> <value>` - pushes the `<value>` into the stack named `<name>`
 * `" <name>` - this instruction acts like pop, but it returns a value, and it changes the top to be the next element after the last pop. It works on the stack called `<name>`
 * `? <name>` - this instruction resets the top pointer of the previous instruction. It works on the stack called `<name>`
-* `! <name>` - this instruction calls a "signal" which is, in fact, a internal module that has effects, either on the memory space or what interpreter can access.
-The only defined signals at the moment are: `debug` and `print`
-`debug` does nothing (not yet implemented)
-`print` it prints the content from predefined `output` stack. Example:  
+* `! <name>` - this instruction calls a signal, which is some functionality implemented in the interpreter. Example:   
 ```
 + output (33)
 
