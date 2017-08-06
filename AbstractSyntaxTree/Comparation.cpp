@@ -18,6 +18,7 @@
  */
 
 
+
 #include "Comparation.h"
 
 Comparation::Comparation()

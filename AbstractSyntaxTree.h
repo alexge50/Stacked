@@ -19,6 +19,7 @@
 
 
 
+
 #ifndef SRC_ABSTRACT_SYNTAX_TREE_H_
 #define SRC_ABSTRACT_SYNTAX_TREE_H_
 
@@ -39,10 +40,13 @@
 #include "AbstractSyntaxTree/Comparation/Equal.h"
 #include "AbstractSyntaxTree/Comparation/GreaterThan.h"
 #include "AbstractSyntaxTree/Comparation/LessThan.h"
+#include "AbstractSyntaxTree/Comparation/NotEmpty.h"
+#include "AbstractSyntaxTree/Comparation/NotEqual.h"
 #include "AbstractSyntaxTree/Expression/Addition.h"
 #include "AbstractSyntaxTree/Expression/Division.h"
 #include "AbstractSyntaxTree/Expression/Mod.h"
 #include "AbstractSyntaxTree/Expression/Multiplication.h"
 #include "AbstractSyntaxTree/Expression/Subtraction.h"
+
 
 #endif /* SRC_ABSTRACT_SYNTAX_TREE_H_ */

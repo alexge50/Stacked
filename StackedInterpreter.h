@@ -19,6 +19,7 @@
 
 
 
+
 #ifndef INTERPRETER_H_
 #define INTERPRETER_H_
 
@@ -57,6 +58,8 @@ private:
 	Comparation* greaterThanInstruction();
 	Comparation* lessThanInstruction();
 	Comparation* equalInstruction();
+	Comparation* notEqualInstruction();
+	Comparation* notEmptyInstruction();
 
 	/*more parsing functions*/
 	std::string string();

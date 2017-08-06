@@ -19,6 +19,7 @@
 
 
 
+
 #ifndef SRC_SIGNALS_H_
 #define SRC_SIGNALS_H_
 
@@ -63,8 +64,6 @@ public:
 		int i = 0;
 
 		scanf("%s", buffer);
-
-		input->stack.push_back( -1 );
 
 		while(buffer[i] != '\0')
 		{

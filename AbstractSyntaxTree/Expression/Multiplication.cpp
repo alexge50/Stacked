@@ -18,6 +18,7 @@
  */
 
 
+
 #include "Multiplication.h"
 
 Multiplication::Multiplication()

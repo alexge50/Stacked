@@ -19,6 +19,7 @@
 
 
 
+
 #include "StackedLanguageManager.h"
 #include "Signal.h"
 
@@ -110,6 +111,16 @@ bool StackedLanguageManager::equalOperation(std::string name1, std::string name2
 	return m_memorySpace[name1]->top() == m_memorySpace[name2]->top();
 }
 
+bool StackedLanguageManager::notEqualOperation(std::string name1, std::string name2)
+{
+	return m_memorySpace[name1]->top() == m_memorySpace[name2]->top();
+}
+
+bool StackedLanguageManager::notEmptyOperation(std::string name)
+{
+	return !m_memorySpace[name]->empty();
+}
+
 
 bool StackedLanguageManager::isInMemory(std::string name)
 {
@@ -161,4 +172,10 @@ int StackedLanguageManager::Stack::top()
 		return stack[stack.size() - 1];
 	else
 		return -1;
+}
+
+bool StackedLanguageManager::Stack::empty()
+{
+	return stack.size() == 0;
+
 }

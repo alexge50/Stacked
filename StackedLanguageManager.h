@@ -19,6 +19,7 @@
 
 
 
+
 #ifndef MYLANG_H_
 #define MYLANG_H_
 
@@ -43,6 +44,7 @@ public:
 
 		int nextElement();
 		int top();
+		bool empty();
 	};
 public:
 	StackedLanguageManager();
@@ -60,6 +62,8 @@ public:
 	bool greaterThanOperation(std::string, std::string);
 	bool lessThanOperation(std::string, std::string);
 	bool equalOperation(std::string, std::string);
+	bool notEqualOperation(std::string, std::string);
+	bool notEmptyOperation(std::string);
 
 	/*functions operations*/
 	void call(std::string); //unavailable

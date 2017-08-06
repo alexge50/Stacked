@@ -1,5 +1,5 @@
 /*
- *   AbstractSyntaxTree/Comparation/Equal.h
+ *   AbstractSyntaxTree/Comparation/NotEmpty.cpp
  *   Copyright (C) 2017  alexge50
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -18,19 +18,20 @@
  */
 
 
+#include "NotEmpty.h"
 
-#ifndef SRC_ABSTRACT_SYNTAX_TREE_COMPARATION_EQUAL_H_
-#define SRC_ABSTRACT_SYNTAX_TREE_COMPARATION_EQUAL_H_
-
-#include "../Comparation.h"
-
-class Equal: public Comparation
+NotEmpty::NotEmpty()
 {
-public:
-	Equal();
-	virtual ~Equal();
+	// TODO Auto-generated constructor stub
 
-	virtual void Run(StackedLanguageManager*) override;
-};
+}
 
-#endif /* SRC_ABSTRACT_SYNTAX_TREE_COMPARATION_EQUAL_H_ */
+NotEmpty::~NotEmpty()
+{
+	// TODO Auto-generated destructor stub
+}
+
+void NotEmpty::Run(StackedLanguageManager* languageManager)
+{
+	m_result = languageManager->notEmptyOperation(m_left);
+}

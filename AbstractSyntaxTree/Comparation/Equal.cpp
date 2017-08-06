@@ -18,6 +18,7 @@
  */
 
 
+
 #include "Equal.h"
 
 Equal::Equal()

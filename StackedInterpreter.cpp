@@ -19,6 +19,7 @@
 
 
 
+
 #include "StackedInterpreter.h"
 #include <stdio.h>
 #include <ctype.h>
@@ -104,6 +105,14 @@ Instruction* StackedInterpreter::line()
 	{
 		return this->equalInstruction();
 	}
+	else if(x == 'n')
+	{
+		return this->notEqualInstruction();
+	}
+	else if(x == 'e')
+	{
+		return this->notEmptyInstruction();
+	}
 	else if(x == '[')
 	{
 		return whileBlock();
@@ -143,6 +152,10 @@ Instruction* StackedInterpreter::whileBlock()
 			condition = this->lessThanInstruction();
 		else if(x == '=')
 			condition = this->equalInstruction();
+		else if(x == 'n')
+			condition = this->notEqualInstruction();
+		else if(x == 'e')
+			condition = this->notEmptyInstruction();
 
 		removeSpaces();
 		if(stream->GetCurrentByte() != ':')
@@ -195,6 +208,10 @@ Instruction* StackedInterpreter::ifBlock()
 			condition = this->lessThanInstruction();
 		else if(x == '=')
 			condition = this->equalInstruction();
+		else if(x == 'n')
+			condition = this->notEqualInstruction();
+		else if(x == 'e')
+			condition = this->notEmptyInstruction();
 
 		removeSpaces();
 		if(stream->GetCurrentByte() != ':')
@@ -368,6 +385,35 @@ Comparation* StackedInterpreter::equalInstruction()
 	return instruction;
 }
 
+Comparation* StackedInterpreter::notEqualInstruction()
+{
+	stream->Advance();
+	removeSpaces();
+
+	std::string name1 = string();
+	removeSpaces();
+	std::string name2 = string();
+
+	Comparation *instruction = new NotEqual();
+
+	instruction->Arguments(name1, name2);
+
+	return instruction;
+}
+
+Comparation* StackedInterpreter::notEmptyInstruction()
+{
+	stream->Advance();
+	removeSpaces();
+
+	std::string name = string();
+
+	NotEmpty *instruction = new NotEmpty;
+
+	instruction->Arguments(name, std::string(""));
+
+	return instruction;
+}
 /*more parsing functions*/
 std::string StackedInterpreter::string()
 {

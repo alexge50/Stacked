@@ -18,6 +18,7 @@
  */
 
 
+
 #include "NewStack.h"
 
 NewStack::NewStack()

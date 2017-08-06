@@ -18,6 +18,7 @@
  */
 
 
+
 #ifndef SRC_STREAM_ISTREAM_H_
 #define SRC_STREAM_ISTREAM_H_
 
