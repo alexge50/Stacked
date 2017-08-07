@@ -113,7 +113,7 @@ bool StackedLanguageManager::equalOperation(std::string name1, std::string name2
 
 bool StackedLanguageManager::notEqualOperation(std::string name1, std::string name2)
 {
-	return m_memorySpace[name1]->top() == m_memorySpace[name2]->top();
+	return m_memorySpace[name1]->top() != m_memorySpace[name2]->top();
 }
 
 bool StackedLanguageManager::notEmptyOperation(std::string name)
