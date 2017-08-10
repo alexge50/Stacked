@@ -30,6 +30,24 @@ StackedInterpreter::StackedInterpreter()
 {
 	// TODO Auto-generated constructor stub
 	stream = NULL;
+
+	InstructionMap['%'] = std::bind(&StackedInterpreter::newInstruction, this);
+	InstructionMap['"'] = std::bind(&StackedInterpreter::nextInstruction, this);
+	InstructionMap['?'] = std::bind(&StackedInterpreter::resetInstruction, this);
+	InstructionMap['-'] = std::bind(&StackedInterpreter::popInstruction, this);
+	InstructionMap['+'] = std::bind(&StackedInterpreter::pushInstruction, this);
+	InstructionMap['!'] = std::bind(&StackedInterpreter::signalInstruction, this);
+	InstructionMap['['] = std::bind(&StackedInterpreter::whileBlock, this);
+	InstructionMap['{'] = std::bind(&StackedInterpreter::ifBlock, this);
+	InstructionMap[']'] = std::bind(&StackedInterpreter::nullInstruction, this);
+	InstructionMap['}'] = std::bind(&StackedInterpreter::nullInstruction, this);
+
+	ComparativeInstructionMap['<'] = std::bind(&StackedInterpreter::lessThanInstruction, this);
+	ComparativeInstructionMap['='] = std::bind(&StackedInterpreter::equalInstruction, this);
+	ComparativeInstructionMap['>'] = std::bind(&StackedInterpreter::greaterThanInstruction, this);
+	ComparativeInstructionMap['n'] = std::bind(&StackedInterpreter::notEqualInstruction, this);
+	ComparativeInstructionMap['e'] = std::bind(&StackedInterpreter::notEmptyInstruction, this);
+
 }
 
 StackedInterpreter::~StackedInterpreter()
@@ -64,68 +82,13 @@ Instruction* StackedInterpreter::line()
 	if(x == EOF)
 		return NULL;
 
-
-	if(x == '(')
-	{
-		return mathBlock();
-	}
-	else if(x == '%')
-	{
-		return this->newInstruction();
-	}
-	else if(x == '"')
-	{
-		return this->nextInstruction();
-	}
-	else if(x == '?')
-	{
-		return this->resetInstruction();
-	}
-	else if(x == '-')
-	{
-		return this->popInstruction();
-	}
-	else if(x == '+')
-	{
-		return this->pushInstruction();
-	}
-	else if(x == '!')
-	{
-		return this->signalInstruction();
-	}
-	else if(x == '>')
-	{
-		return this->greaterThanInstruction();
-	}
-	else if(x == '<')
-	{
-		return this->lessThanInstruction();
-	}
-	else if(x == '=')
-	{
-		return this->equalInstruction();
-	}
-	else if(x == 'n')
-	{
-		return this->notEqualInstruction();
-	}
-	else if(x == 'e')
-	{
-		return this->notEmptyInstruction();
-	}
-	else if(x == '[')
-	{
-		return whileBlock();
-	}
-	else if(x == '{')
-	{
-		return ifBlock();
-	}
-	else if(x == ']') return NULL;
-	else if(x == '}') return NULL;
+	if(InstructionMap.find(x) != InstructionMap.end())
+		return InstructionMap[x]();
 	else
 	{
-		printf("Parsing error, instruction '%c' not found", x);
+		if(x == '(' || ComparativeInstructionMap.find(x) != ComparativeInstructionMap.end())
+			printf("Parsing error, instruction '%c' not expected", x);
+		else printf("Undefined instruction '%c'\n", x);
 		exit(0);
 	}
 
@@ -152,19 +115,14 @@ Instruction* StackedInterpreter::whileBlock()
 		char x = stream->GetCurrentByte();
 		Comparation *condition;
 
-		if(x == '>')
-			condition = this->greaterThanInstruction();
-		else if(x == '<')
-			condition = this->lessThanInstruction();
-		else if(x == '=')
-			condition = this->equalInstruction();
-		else if(x == 'n')
-			condition = this->notEqualInstruction();
-		else if(x == 'e')
-			condition = this->notEmptyInstruction();
+
+		if(ComparativeInstructionMap.find(x) != ComparativeInstructionMap.end())
+			condition = ComparativeInstructionMap[x]();
 		else
 		{
-			printf("expected comparing instruction\n");
+			if(x == '(' || InstructionMap.find(x) != InstructionMap.end())
+				printf("expected comparing instruction\n");
+			else printf("Undefined instruction '%c'\n", x);
 			exit(0);
 		}
 
@@ -215,19 +173,13 @@ Instruction* StackedInterpreter::ifBlock()
 		char x = stream->GetCurrentByte();
 		Comparation *condition;
 
-		if(x == '>')
-			condition = this->greaterThanInstruction();
-		else if(x == '<')
-			condition = this->lessThanInstruction();
-		else if(x == '=')
-			condition = this->equalInstruction();
-		else if(x == 'n')
-			condition = this->notEqualInstruction();
-		else if(x == 'e')
-			condition = this->notEmptyInstruction();
+		if(ComparativeInstructionMap.find(x) != ComparativeInstructionMap.end())
+			condition = ComparativeInstructionMap[x]();
 		else
 		{
-			printf("expected comparing instruction\n");
+			if(x == '(' || InstructionMap.find(x) != InstructionMap.end())
+				printf("expected comparing instruction\n");
+			else printf("Undefined instruction '%c'\n", x);
 			exit(0);
 		}
 
@@ -355,6 +307,11 @@ Instruction* StackedInterpreter::signalInstruction()
 	instruction->Argument(name);
 
 	return instruction;
+}
+
+Instruction* StackedInterpreter::nullInstruction()
+{
+	return NULL;
 }
 
 Comparation* StackedInterpreter::greaterThanInstruction()

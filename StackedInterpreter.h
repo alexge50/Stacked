@@ -23,7 +23,9 @@
 #ifndef INTERPRETER_H_
 #define INTERPRETER_H_
 
+#include <map>
 #include <string>
+#include <functional>
 #include "StackedLanguageManager.h"
 #include "Stream/IStream.h"
 
@@ -54,6 +56,7 @@ private:
 	Instruction* pushInstruction();
 	Instruction* resetInstruction();
 	Instruction* signalInstruction();
+	Instruction* nullInstruction();
 
 	Comparation* greaterThanInstruction();
 	Comparation* lessThanInstruction();
@@ -76,15 +79,12 @@ private:
 	IStream *stream;
 
 private:
-	/* for while block*/
-	long int whileBlockStartPosition;
-	long int whileBlockEndPosition;
+	typedef std::function<Instruction*(void)> InstructionDelegate;
+	typedef std::function<Comparation*(void)> ComparativeInstructionDelegate;
 
-	/* for if block*/
-	long int ifBlockStartPosition;
-	long int ifBlockEndPosition;
-private:
 	StackedLanguageManager manager;
+	std::map<char, InstructionDelegate> InstructionMap;
+	std::map<char, ComparativeInstructionDelegate> ComparativeInstructionMap;
 };
 
 #endif /* INTERPRETER_H_ */
