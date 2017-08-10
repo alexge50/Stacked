@@ -121,7 +121,13 @@ Instruction* StackedInterpreter::line()
 	{
 		return ifBlock();
 	}
-	//else return NULL;
+	else if(x == ']') return NULL;
+	else if(x == '}') return NULL;
+	else
+	{
+		printf("Parsing error, instruction '%c' not found", x);
+		exit(0);
+	}
 
 	removeSpaces();
 
@@ -156,11 +162,17 @@ Instruction* StackedInterpreter::whileBlock()
 			condition = this->notEqualInstruction();
 		else if(x == 'e')
 			condition = this->notEmptyInstruction();
+		else
+		{
+			printf("expected comparing instruction\n");
+			exit(0);
+		}
 
 		removeSpaces();
 		if(stream->GetCurrentByte() != ':')
 		{
-			printf("condition statement was not ended\n");
+			printf("expected ':'\n");
+			exit(0);
 			return NULL;
 		}
 		stream->Advance();
@@ -183,7 +195,8 @@ Instruction* StackedInterpreter::whileBlock()
 	else
 	{
 		printf("expected condition\n");
-			return NULL;
+		exit(0);
+		return NULL;
 	}
 
 	return NULL;
@@ -212,11 +225,17 @@ Instruction* StackedInterpreter::ifBlock()
 			condition = this->notEqualInstruction();
 		else if(x == 'e')
 			condition = this->notEmptyInstruction();
+		else
+		{
+			printf("expected comparing instruction\n");
+			exit(0);
+		}
 
 		removeSpaces();
 		if(stream->GetCurrentByte() != ':')
 		{
-			printf("condition statement was not ended\n");
+			printf("expected ':'\n");
+			exit(0);
 			return NULL;
 		}
 		stream->Advance();
@@ -241,7 +260,8 @@ Instruction* StackedInterpreter::ifBlock()
 	else
 	{
 		printf("expected condition\n");
-			return NULL;
+		exit(0);
+		return NULL;
 	}
 
 	return NULL;
@@ -454,8 +474,8 @@ Expression* StackedInterpreter::expression()
 		stream->Advance();
 	else
 	{
-		printf("syntax error %d %c\n", __LINE__, stream->GetCurrentByte());
-		return 0;
+		printf("syntax error, expression must be put inside '()'. expected expression \n");
+		exit(0);
 	}
 
 	removeSpaces();
@@ -474,7 +494,8 @@ Expression* StackedInterpreter::expression()
 		stream->Advance();
 	else
 	{
-		printf("syntax error %d %c\n", __LINE__, stream->GetCurrentByte());
+		printf("expected ')'\n");
+		exit(0);
 		//return 0;
 	}
 
@@ -536,7 +557,8 @@ Expression* StackedInterpreter::factor()
 	}
 	else
 	{
-		printf("syntax error %d %c\n", __LINE__, stream->GetCurrentByte());
+		printf("expected numeric constant or result from \"\n");
+		exit(0);
 		return NULL;
 	}
 
