@@ -72,7 +72,7 @@ The only types of conditions are comparison instructions, which compares the top
     * `= leftStack rightStack` - which is the same as: `leftStack's top = rightStack's top`
     * `n leftStack rightStack` - which is the same as: `leftStack's top != rightStack's top`
     * `< leftStack rightStack` - which is the same as: `leftStack's top < rightStack's top`
-    * `e stack` - stack `stack` not empty. Technically not an instruction that compares, but because it compares stack size against 0 and because it is an instruction that can be used as an condition, it is considered a comparative instruction nonetheless.
+    * `e stack` - check if stack `stack` is not empty. Technically not an instruction that compares, but because it compares stack size against 0 and because it is an instruction that can be used as an condition, it is considered a comparative instruction nonetheless.
 
 The if block looks as follows:
 	
