@@ -45,7 +45,7 @@ void FileStream::Advance()
 	if(currentChar == '\n')
 	{
 		position.line ++;
-		position.column = 0;
+		position.column = 1;
 	}
 	else position.column ++;
 }
@@ -60,6 +60,10 @@ bool FileStream::OpenFile(std::string s)
 {
 	fin = fopen(s.c_str(), "r");
 	if(fin != NULL) currentChar = fgetc(fin);
+
+	position.line = 1;
+	position.column = 1;
+
 	return fin != NULL;
 }
 
