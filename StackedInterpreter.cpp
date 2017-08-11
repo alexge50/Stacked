@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include <ctype.h>
 
-#include "Signals.h"
+#include "Error.h"
 
 StackedInterpreter::StackedInterpreter()
 {
@@ -62,13 +62,20 @@ void StackedInterpreter::setStream(IStream* s)
 
 Program* StackedInterpreter::program()
 {
-	int j = 0;
 	Program *program = new Program;
-	Instruction *i;
-	while((i = line()) != NULL)
-		program->GetInstructionBlock()->push_back(i), j ++;
+	try
+	{
+		int j = 0;
+		Instruction *i;
+		while((i = line()) != NULL)
+			program->GetInstructionBlock()->push_back(i), j ++;
 
-	//printf("this program %d has instructions\n", j);
+		//printf("this program %d has instructions\n", j);
+	}
+	catch(Error &message)
+	{
+		printf("%s", message.getPrintableString().c_str());
+	}
 
 	return program;
 }
@@ -87,9 +94,8 @@ Instruction* StackedInterpreter::line()
 	else
 	{
 		if(x == '(' || ComparativeInstructionMap.find(x) != ComparativeInstructionMap.end())
-			printf("Parsing error, instruction '%c' not expected", x);
-		else printf("Undefined instruction '%c'\n", x);
-		exit(0);
+			throw Error(ParsingError, -1, -1, std::string("Parsing error, instruction '") + x + "' not expected");
+		else throw Error(ParsingError, -1, -1, std::string("undefined instruction '") + x + "'");
 	}
 
 	removeSpaces();
@@ -121,17 +127,14 @@ Instruction* StackedInterpreter::whileBlock()
 		else
 		{
 			if(x == '(' || InstructionMap.find(x) != InstructionMap.end())
-				printf("expected comparing instruction\n");
-			else printf("Undefined instruction '%c'\n", x);
-			exit(0);
+				throw Error(ParsingError, -1, -1, "expected comparing instruction");
+			else throw Error(ParsingError, -1, -1, std::string("undefined instruction '") + x + "'");
 		}
 
 		removeSpaces();
 		if(stream->GetCurrentByte() != ':')
 		{
-			printf("expected ':'\n");
-			exit(0);
-			return NULL;
+			throw Error(ParsingError, -1, -1, "expected  ':'");
 		}
 		stream->Advance();
 		removeSpaces();
@@ -151,11 +154,7 @@ Instruction* StackedInterpreter::whileBlock()
 		return instruction;
 	}
 	else
-	{
-		printf("expected condition\n");
-		exit(0);
-		return NULL;
-	}
+		throw Error(ParsingError, -1, -1, "expected condition statement");
 
 	return NULL;
 }
@@ -178,9 +177,8 @@ Instruction* StackedInterpreter::ifBlock()
 		else
 		{
 			if(x == '(' || InstructionMap.find(x) != InstructionMap.end())
-				printf("expected comparing instruction\n");
-			else printf("Undefined instruction '%c'\n", x);
-			exit(0);
+				throw Error(ParsingError, -1, -1, "expected comparing instruction");
+			else throw Error(ParsingError, -1, -1, std::string("undefined instruction '") + x + "'");
 		}
 
 		removeSpaces();
@@ -210,11 +208,7 @@ Instruction* StackedInterpreter::ifBlock()
 
 	}
 	else
-	{
-		printf("expected condition\n");
-		exit(0);
-		return NULL;
-	}
+		throw Error(ParsingError, -1, -1, "expected condition statement");
 
 	return NULL;
 }
@@ -391,35 +385,6 @@ Comparation* StackedInterpreter::notEmptyInstruction()
 
 	return instruction;
 }
-/*more parsing functions*/
-std::string StackedInterpreter::string()
-{
-	std::string x;
-
-	while(isalnum(stream->GetCurrentByte()))
-	{
-		x = x + stream->GetCurrentByte();
-		stream->Advance();
-	}
-
-	return x;
-}
-
-int StackedInterpreter::number()
-{
-	int x = 0;
-	removeSpaces();
-
-
-	while(isdigit(stream->GetCurrentByte()))
-	{
-		x = ( stream->GetCurrentByte() - '0' ) + x * 10;
-		stream->Advance();
-	}
-
-	return x;
-}
-
 
 
 Expression* StackedInterpreter::expression()
@@ -430,10 +395,7 @@ Expression* StackedInterpreter::expression()
 	if(stream->GetCurrentByte() == '(')
 		stream->Advance();
 	else
-	{
-		printf("syntax error, expression must be put inside '()'. expected expression \n");
-		exit(0);
-	}
+		throw Error(ParsingError, -1, -1, "syntax error, expression must be put inside '()'. expected expression");
 
 	removeSpaces();
 	t1 = term();
@@ -450,11 +412,7 @@ Expression* StackedInterpreter::expression()
 	if(stream->GetCurrentByte() == ')')
 		stream->Advance();
 	else
-	{
-		printf("expected ')'\n");
-		exit(0);
-		//return 0;
-	}
+		throw Error(ParsingError, -1, -1, "expected ')'\n");
 
 	Expression *instruction;
 
@@ -513,10 +471,35 @@ Expression* StackedInterpreter::factor()
 		x = nextInstruction();
 	}
 	else
+		throw Error(ParsingError, -1, -1, "expected numeric constant or result from \"\n");
+
+	return x;
+}
+
+/*more parsing functions*/
+std::string StackedInterpreter::string()
+{
+	std::string x;
+
+	while(isalnum(stream->GetCurrentByte()))
 	{
-		printf("expected numeric constant or result from \"\n");
-		exit(0);
-		return NULL;
+		x = x + stream->GetCurrentByte();
+		stream->Advance();
+	}
+
+	return x;
+}
+
+int StackedInterpreter::number()
+{
+	int x = 0;
+	removeSpaces();
+
+
+	while(isdigit(stream->GetCurrentByte()))
+	{
+		x = ( stream->GetCurrentByte() - '0' ) + x * 10;
+		stream->Advance();
 	}
 
 	return x;

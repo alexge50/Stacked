@@ -18,7 +18,7 @@
  */
 
 
-
+#define DEBUG 0
 
 #include "StackedLanguageManager.h"
 #include "Signal.h"

@@ -18,10 +18,6 @@
  */
 
 
-
-
-#define DEBUG 0
-
 #include <iostream>
 
 #include "StackedInterpreter.h"

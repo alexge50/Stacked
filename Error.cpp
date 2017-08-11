@@ -1,6 +1,6 @@
 /*
  *   Error.cpp
- *   Copyright (C) {}  alexge50
+ *   Copyright (C) 2017 alexge50
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ std::string Error::getPrintableString()
 	std::string errorTypes[2] = {"Parsing Error", "Runtime Error"};
 	std::stringstream ss;
 
-	ss << errorTypes[m_errorType] << " - " << "(l: " << m_line << ", c: "<< m_column << "):" << m_message << std::endl;
+	ss << errorTypes[m_errorType] << " - " << "(l: " << m_line << ", c: "<< m_column << "): " << m_message << std::endl;
 
 	return ss.str();
 }
