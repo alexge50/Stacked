@@ -40,7 +40,9 @@ std::string Error::getPrintableString()
 	std::string errorTypes[2] = {"Parsing Error", "Runtime Error"};
 	std::stringstream ss;
 
-	ss << errorTypes[m_errorType] << " - " << "(l: " << m_line << ", c: "<< m_column << "): " << m_message << std::endl;
+	if(m_line != -1)
+		ss << errorTypes[m_errorType] << " - " << "(l: " << m_line << ", c: "<< m_column << "): " << m_message << std::endl;
+	else ss << errorTypes[m_errorType] << ": " << m_message << std::endl;
 
 	return ss.str();
 }
