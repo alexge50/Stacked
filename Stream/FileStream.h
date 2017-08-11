@@ -35,10 +35,7 @@ public:
 public:
 	virtual char GetCurrentByte()override;
 	virtual void Advance()override;
-
-public:
-	virtual unsigned long int GetCurrentPosition()override;
-	virtual void SetPosition(unsigned long int)override;
+	virtual StreamPosition GetCurrentPosition() override;
 
 public:
 	bool OpenFile(std::string);
@@ -47,6 +44,7 @@ public:
 private:
 	FILE *fin;
 	char currentChar;
+	StreamPosition position;
 };
 
 #endif /* SRC_STREAM_FILESTREAM_H_ */

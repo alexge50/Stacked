@@ -41,17 +41,18 @@ char FileStream::GetCurrentByte()
 void FileStream::Advance()
 {
 	currentChar = fgetc(fin);
+
+	if(currentChar == '\n')
+	{
+		position.line ++;
+		position.column = 0;
+	}
+	else position.column ++;
 }
 
-unsigned long int FileStream::GetCurrentPosition()
+StreamPosition FileStream::GetCurrentPosition()
 {
-	return ftell(fin);
-}
-
-void FileStream::SetPosition(unsigned long int x)
-{
-	fseek(fin, x - 1, SEEK_SET);
-	Advance();
+	return position;
 }
 
 
