@@ -21,7 +21,7 @@ langManager.addSignal<SyscallSignal>("system");
 Signals can have their own stacks, for instance `print` has an `output` stack. The currently defined signals are:
 
 * `print`: it prints `output` content in stdout
-* `scan`: it gets stdin's content and copies it into `input` stack. The input stacks ends in `-1`
+* `scan`: it gets stdin's content and copies it into `input` stack. 
 * `system`: it makes a system call with the content of `system`
 
 ***Since the signals uses stacks, the elements are popped in the reverse order they were pushed.***
