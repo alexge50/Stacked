@@ -22,9 +22,9 @@ Signals can have their own stacks, for instance `print` has an `output` stack. T
 
 * `print`: it prints `output` content in stdout
 * `scan`: it gets stdin's content and copies it into `input` stack. 
-* `system`: it makes a system call with the content of `system`
+* `system`: it makes a system call with the content of `system`  
 
-***Since the signals uses stacks, the elements are popped in the reverse order they were pushed.***
+***Since the signals use stacks, the elements are popped in the reverse order they were pushed.***  
 So, to print `Hello, World!`, it is needed to push the elements in the reversed order: `!dlroW ,olleH`. In stacked, it is as follows:
 ```
 + output (10)
