@@ -63,10 +63,12 @@ In parsing, there is no support for negative numbers, instead of writing -50 the
 
 
 * `if block` – this is an if, and the block of instructions is executed only if the condition returns true:
-The only types of conditions are comparison instructions, which compares the top (the top, not what `next element` returns) of 2 stacks. The available comparison instructions are:
-`> leftStack rightStack` - which is the same as: `leftStack's top > rightStack's top`
-`= leftStack rightStack` - which is the same as: `leftStack's top = rightStack's top`
-`< leftStack rightStack` - which is the same as: `leftStack's top < rightStack's top`
+The only types of conditions are comparison instructions, which compares the top (the top, not what `next element` returns) of 2 stacks. The available comparative instructions are:
+    * `> leftStack rightStack` - which is the same as: `leftStack's top > rightStack's top`
+    * `= leftStack rightStack` - which is the same as: `leftStack's top = rightStack's top`
+    * `n leftStack rightStack` - which is the same as: `leftStack's top != rightStack's top`
+    * `< leftStack rightStack` - which is the same as: `leftStack's top < rightStack's top`
+    * `e stack` - stack `stack` not empty. Technically not an instruction that compares, but because it compares stack size against 0 and because it is an instruction that can be used as an condition, it is considered a comparative instruction nonetheless.
 
 The if block looks as follows:
 	
@@ -86,6 +88,5 @@ The if block looks as follows:
 ```
 
 Upcoming features:
-* an instruction to check if a stack is not empty
 * function calls (ie. call a set of instruction from another file) 
-* a better error log  
+* an parsing error log for the entire file  
