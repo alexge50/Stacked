@@ -7,10 +7,10 @@ Each stacks is identified by its name, which is a string. The stack specific ins
 *  `- <name>` - "pop from stack" pops the top of the stack named <name> 
 *  `+ <name> <value>` - "push to stack" pushes the <value> into the stack named <name> 
 *  `" <name>` - "next element" this instruction acts like pop, but it returns a value, and it changes the top to be the next element after the last pop. It doesn't delete the current top. It works on the stack called <name> 
-* ? <name> - "reset stack" this instruction resets the top pointer of the previous instruction. It works on the stack called <name> 
+* `? <name>` - "reset stack" this instruction resets the top pointer of the previous instruction. It works on the stack called <name> 
 
 Apart from instructions that operate on stacks, there is one more instruction:
-! <name> - "call signal", a signal is an internal functionality that is registered in `StackedLanguageManager`.  
+* `! <name>` - "call signal", a signal is an internal functionality that is registered in `StackedLanguageManager`.  
 		
 ```cpp
 langManager.addSignal<OutputSignal>("print");
@@ -54,11 +54,15 @@ math block - The math block is used to process an expression. A math block's syn
 + stack ((70 - 50) + 30 / (" stack))
 Each operation inside a math block (+, -, /, *) accepts only 2 terms. (50 * 50 * 50) is invalid for instance. But (50 * (50 * 50)) is valid since (50 * 50) is considered as a single term, since it's a math block.
 `<value>` refers to what a math block returns. Numeric values/constants/what " returns cannot be used as argument for +. The following is invalid:
+```
 + stack 50
 + stack " anotherStack
-It should be:
+```  
+It should be:  
+```
 + stack (50)
 + stack (" anotherStack)
+```  
 In parsing, there is no support for negative numbers, instead of writing -50 the (0 - 50) should be written.
 
 
