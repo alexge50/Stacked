@@ -20,10 +20,8 @@
 
 
 
-#ifndef MYLANG_H_
-#define MYLANG_H_
-
-//#include "Signal.h"
+#ifndef STACKEDLANGUAGEMANAGER_H_
+#define STACKEDLANGUAGEMANAGER_H_
 
 #include <map>
 #include <vector>
@@ -90,7 +88,11 @@ private:
 
 	Signal* configureSignal(Signal*);
 
+private:
+	void assertStackExistence(std::string);
+	void assertSignalExistence(std::string);
+
 	friend class Signal;
 };
 
-#endif /* MYLANG_H_ */
+#endif /* STACKEDLANGUAGEMANAGER_H_ */

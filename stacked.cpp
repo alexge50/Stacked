@@ -24,8 +24,8 @@
 #include "StackedLanguageManager.h"
 #include "AbstractSyntaxTree/Program.h"
 
+#include "Error.h"
 #include "Signals.h"
-
 #include "Stream/FileStream.h"
 
 #include <stdlib.h>
@@ -65,19 +65,25 @@ Under certain conditions; \n\n\n");
 		return 0;
 	}
 
-	StackedInterpreter interp;
-	StackedLanguageManager langManager;
+	try
+	{
+		StackedInterpreter interp;
+		StackedLanguageManager langManager;
 
-	interp.setStream(file);
-	Program *program = interp.program();
+		interp.setStream(file);
+		Program *program = interp.program();
 
-	langManager.addSignal<OutputSignal>("print");
-	langManager.addSignal<InputSignal>("scan");
-	langManager.addSignal<SyscallSignal>("system");
-	langManager.addSignal<DebugSignal>("debug");
+		langManager.addSignal<OutputSignal>("print");
+		langManager.addSignal<InputSignal>("scan");
+		langManager.addSignal<SyscallSignal>("system");
+		langManager.addSignal<DebugSignal>("debug");
 
-	program->Run(&langManager);
-
+		program->Run(&langManager);
+	}
+	catch (Error &error)
+	{
+		printf("%s", error.getPrintableString().c_str());
+	}
 
 	return 0;
 }

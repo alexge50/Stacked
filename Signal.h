@@ -25,7 +25,7 @@
 #define SRC_SIGNAL_H_
 
 #include "StackedLanguageManager.h"
-
+#include <string>
 
 
 class Signal

@@ -22,6 +22,7 @@
 
 #include "StackedLanguageManager.h"
 #include "Signal.h"
+#include "Error.h"
 
 #include <stdio.h>
 
@@ -136,19 +137,24 @@ void StackedLanguageManager::signal(std::string name)
 	m_signalMap[name]->main();
 }
 
-/*
-template<typename T>
-void StackedLanguageManager::addSignal<T>(std::string name)
-{
-	m_signalMap[name] = (Signal*) new T(this);
-}*/
-
 
 Signal* StackedLanguageManager::configureSignal(Signal* x)
 {
 	x->owner = this;
 	x->init();
 	return x;
+}
+
+void StackedLanguageManager::assertStackExistence(std::string x)
+{
+	if(m_memorySpace.find(x) == m_memorySpace.end())
+		throw Error(RuntimeError, -1, -1, std::string("stack '") + x + "' was not defined");
+}
+
+void StackedLanguageManager::assertSignalExistence(std::string x)
+{
+	if(m_signalMap.find(x) == m_signalMap.end())
+		throw Error(RuntimeError, -1, -1, std::string("signal '") + x + "' was not registered");
 }
 
 /***********/

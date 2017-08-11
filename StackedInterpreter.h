@@ -20,8 +20,8 @@
 
 
 
-#ifndef INTERPRETER_H_
-#define INTERPRETER_H_
+#ifndef STACKEDINTERPRETER_H_
+#define STACKEDINTERPRETER_H_
 
 #include <map>
 #include <string>
@@ -87,4 +87,4 @@ private:
 	std::map<char, ComparativeInstructionDelegate> ComparativeInstructionMap;
 };
 
-#endif /* INTERPRETER_H_ */
+#endif /* STACKEDINTERPRETER_H_ */
