@@ -29,6 +29,7 @@
 #include "AbstractSyntaxTree/If.h"
 #include "AbstractSyntaxTree/InstructionBlock.h"
 #include "AbstractSyntaxTree/Instruction.h"
+#include "AbstractSyntaxTree/InvalidInstruction.h"
 #include "AbstractSyntaxTree/NewStack.h"
 #include "AbstractSyntaxTree/NextElement.h"
 #include "AbstractSyntaxTree/PopStack.h"
