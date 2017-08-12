@@ -37,6 +37,8 @@ public:
 public:
 	std::string getPrintableString();
 
+	bool operator<(const Error&);
+
 private:
 	ErrorType m_errorType;
 	int m_line, m_column;

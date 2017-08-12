@@ -20,6 +20,7 @@
 #include "Error.h"
 
 #include <sstream>
+#include <algorithm>
 
 Error::Error(ErrorType errorType, int line, int column, std::string message)
 {
@@ -37,7 +38,7 @@ Error::~Error()
 
 std::string Error::getPrintableString()
 {
-	std::string errorTypes[2] = {"Parsing Error", "Runtime Error"};
+	std::string errorTypes[3] = {"", "Parsing Error", "Runtime Error"};
 	std::stringstream ss;
 
 	if(m_line != -1)
@@ -45,6 +46,13 @@ std::string Error::getPrintableString()
 	else ss << errorTypes[m_errorType] << ": " << m_message << std::endl;
 
 	return ss.str();
+}
+
+bool Error::operator<(const Error& x)
+{
+	if(this->m_line == x.m_line)
+		return this->m_column < x.m_column;
+	else return this->m_line < x.m_line;
 }
 
 /**ErrorList**/
@@ -59,11 +67,14 @@ ErrorList::~ErrorList()
 
 }
 
+
 void ErrorList::addError(Error e) { m_errorList.push_back(e); }
 
 std::string ErrorList::getPrintableString()
 {
 	std::stringstream ss;
+
+	std::sort(m_errorList.begin(), m_errorList.end());
 
 	for(int i = 0; i < m_errorList.size(); i++)
 			ss << m_errorList[i].getPrintableString();
