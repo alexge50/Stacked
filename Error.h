@@ -49,8 +49,9 @@ public:
 	ErrorList();
 	virtual ~ErrorList();
 
-	void AddError(Error);
+	void addError(Error);
 	std::string getPrintableString();
+	bool isEmpty();
 
 private:
 	std::vector<Error> m_errorList;

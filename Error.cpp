@@ -59,7 +59,7 @@ ErrorList::~ErrorList()
 
 }
 
-void ErrorList::AddError(Error e) { m_errorList.push_back(e); }
+void ErrorList::addError(Error e) { m_errorList.push_back(e); }
 
 std::string ErrorList::getPrintableString()
 {
@@ -70,3 +70,5 @@ std::string ErrorList::getPrintableString()
 
 	return ss.str();
 }
+
+bool ErrorList::isEmpty() { return m_errorList.size() == 0; }
