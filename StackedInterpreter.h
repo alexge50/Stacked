@@ -26,10 +26,10 @@
 #include <map>
 #include <string>
 #include <functional>
-#include "StackedLanguageManager.h"
-#include "Stream/IStream.h"
 
+#include "Stream/IStream.h"
 #include "AbstractSyntaxTree.h"
+#include "Error.h"
 
 class StackedInterpreter
 {
@@ -85,6 +85,9 @@ private:
 	StackedLanguageManager manager;
 	std::map<char, InstructionDelegate> InstructionMap;
 	std::map<char, ComparativeInstructionDelegate> ComparativeInstructionMap;
+
+private:
+	ErrorList errorList;
 };
 
 #endif /* STACKEDINTERPRETER_H_ */

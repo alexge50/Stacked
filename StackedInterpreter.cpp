@@ -24,8 +24,6 @@
 #include <stdio.h>
 #include <ctype.h>
 
-#include "Error.h"
-
 StackedInterpreter::StackedInterpreter()
 {
 	// TODO Auto-generated constructor stub
