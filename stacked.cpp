@@ -84,6 +84,10 @@ Under certain conditions; \n\n\n");
 	{
 		printf("%s", error.getPrintableString().c_str());
 	}
+	catch(ErrorList &error)
+	{
+		printf("%s", error.getPrintableString().c_str());
+	}
 
 	return 0;
 }

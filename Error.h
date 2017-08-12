@@ -20,11 +20,12 @@
 #define SRC_ERROR_H_
 
 #include <string>
+#include <vector>
 
 enum ErrorType
 {
-	ParsingError = 0,
-	RuntimeError = 1
+	ParsingError = 1,
+	RuntimeError = 2
 };
 
 class Error
@@ -40,6 +41,19 @@ private:
 	ErrorType m_errorType;
 	int m_line, m_column;
 	std::string m_message;
+};
+
+class ErrorList
+{
+public:
+	ErrorList();
+	virtual ~ErrorList();
+
+	void AddError(Error);
+	std::string getPrintableString();
+
+private:
+	std::vector<Error> m_errorList;
 };
 
 #endif /* SRC_ERROR_H_ */

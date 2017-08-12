@@ -46,3 +46,27 @@ std::string Error::getPrintableString()
 
 	return ss.str();
 }
+
+/**ErrorList**/
+
+ErrorList::ErrorList()
+{
+
+}
+
+ErrorList::~ErrorList()
+{
+
+}
+
+void ErrorList::AddError(Error e) { m_errorList.push_back(e); }
+
+std::string ErrorList::getPrintableString()
+{
+	std::stringstream ss;
+
+	for(int i = 0; i < m_errorList.size(); i++)
+			ss << m_errorList[i].getPrintableString();
+
+	return ss.str();
+}
