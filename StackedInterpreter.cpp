@@ -24,6 +24,10 @@
 #include <stdio.h>
 #include <ctype.h>
 
+#include "Stream/IStream.h"
+
+#define EOF_INDICATOR ((Instruction*)-1)
+
 StackedInterpreter::StackedInterpreter()
 {
 	// TODO Auto-generated constructor stub
@@ -64,9 +68,13 @@ Program* StackedInterpreter::program()
 
 	int j = 0;
 	Instruction *i;
-	while((i = line()) != NULL)
+	while((i = line()) != EOF_INDICATOR)
 		program->GetInstructionBlock()->push_back(i), j ++;
 
+	//printf("%d operations parsed\n", program->GetInstructionBlock()->size());
+
+	if(!errorList.isEmpty())
+		throw errorList;
 
 	return program;
 }
@@ -78,7 +86,7 @@ Instruction* StackedInterpreter::line()
 	x = stream->GetCurrentByte();
 
 	if(x == EOF)
-		return NULL;
+		return EOF_INDICATOR;
 
 	if(InstructionMap.find(x) != InstructionMap.end())
 		return InstructionMap[x]();
@@ -87,8 +95,12 @@ Instruction* StackedInterpreter::line()
 		int line = stream->GetCurrentPosition().line;
 		int column = stream->GetCurrentPosition().column;
 		if(x == '(' || ComparativeInstructionMap.find(x) != ComparativeInstructionMap.end())
-			throw Error(ParsingError, line, column, std::string("Parsing error, instruction '") + x + "' not expected");
-		else throw Error(ParsingError, line, column, std::string("undefined instruction '") + x + "'");
+			errorList.addError(Error(ParsingError, line, column, std::string("Parsing error, instruction '") + x + "' not expected; line discarded"));
+		else errorList.addError(Error(ParsingError, line, column, std::string("undefined instruction '") + x + "'; line discarded"));
+
+		readUntil('\n');
+
+		return (Instruction*)new InvalidInstruction();
 	}
 
 	removeSpaces();
@@ -106,58 +118,79 @@ Instruction* StackedInterpreter::whileBlock()
 	stream->Advance();
 	removeSpaces();
 
+	StreamPosition whilePosition = stream->GetCurrentPosition();
+	bool invalid = false;
+
 	if(stream->GetCurrentByte() == ':')
 	{
 		stream->Advance();
 		removeSpaces();
-
-		char x = stream->GetCurrentByte();
-		Comparation *condition;
-
-
-		if(ComparativeInstructionMap.find(x) != ComparativeInstructionMap.end())
-			condition = ComparativeInstructionMap[x]();
-		else
-		{
-			int line = stream->GetCurrentPosition().line;
-			int column = stream->GetCurrentPosition().column;
-			if(x == '(' || InstructionMap.find(x) != InstructionMap.end())
-				throw Error(ParsingError, line, column, "expected comparing instruction");
-			else throw Error(ParsingError, line, column, std::string("undefined instruction '") + x + "'");
-		}
-
-		removeSpaces();
-		if(stream->GetCurrentByte() != ':')
-		{
-			int line = stream->GetCurrentPosition().line;
-			int column = stream->GetCurrentPosition().column;
-			throw Error(ParsingError, line, column, "expected  ':'");
-		}
-		stream->Advance();
-		removeSpaces();
-
-		While *instruction = new While();
-
-		instruction->Condition(condition);
-
-		Instruction *whileInstruction = line();
-		while(whileInstruction != NULL && stream->GetCurrentByte() != ']')
-		{
-			instruction->GetInstructionBlock()->push_back(whileInstruction);
-			whileInstruction = line();
-		}
-		stream->Advance();
-
-		return instruction;
 	}
 	else
 	{
 		int line = stream->GetCurrentPosition().line;
 		int column = stream->GetCurrentPosition().column;
-		throw Error(ParsingError, line, column, "expected condition statement");
+		errorList.addError(Error(ParsingError, line, column, "expected condition statement"));
+
+		invalid = true;
+		//return (Instruction*)new InvalidInstruction();
 	}
 
-	return NULL;
+	char x = stream->GetCurrentByte();
+	Comparation *condition;
+
+
+	if(ComparativeInstructionMap.find(x) != ComparativeInstructionMap.end())
+		condition = ComparativeInstructionMap[x]();
+	else
+	{
+		int line = stream->GetCurrentPosition().line;
+		int column = stream->GetCurrentPosition().column;
+		if(x == '(' || InstructionMap.find(x) != InstructionMap.end())
+			errorList.addError(Error(ParsingError, line, column, "expected comparing instruction"));
+		else errorList.addError(Error(ParsingError, line, column, std::string("undefined instruction '") + x + "'"));
+			condition =  NULL;
+		invalid = true;
+	}
+
+	removeSpaces();
+	if(stream->GetCurrentByte() != ':')
+	{
+		int line = stream->GetCurrentPosition().line;
+		int column = stream->GetCurrentPosition().column;
+		errorList.addError(Error(ParsingError, line, column, "expected  ':'"));
+
+		invalid = true;
+	}
+	else
+		stream->Advance();
+	removeSpaces();
+
+	While *instruction = new While();
+
+	instruction->Condition(condition);
+
+	Instruction *whileInstruction = line();
+	while(whileInstruction != NULL && whileInstruction != EOF_INDICATOR && stream->GetCurrentByte() != ']')
+	{
+		instruction->GetInstructionBlock()->push_back(whileInstruction);
+				whileInstruction = line();
+	}
+
+	if(whileInstruction == EOF_INDICATOR)
+	{
+		int line = whilePosition.line;
+		int column = whilePosition.column;
+		errorList.addError(Error(ParsingError, line, column, "while not ended"));
+
+		invalid = true;
+	}
+
+	stream->Advance();
+
+	if(invalid)
+		return (Instruction*) new InvalidInstruction();
+	return instruction;
 }
 
 Instruction* StackedInterpreter::ifBlock()
@@ -165,59 +198,79 @@ Instruction* StackedInterpreter::ifBlock()
 	stream->Advance();
 	removeSpaces();
 
+	StreamPosition ifPosition = stream->GetCurrentPosition();
+	bool invalid = false;
+
 	if(stream->GetCurrentByte() == ':')
 	{
 		stream->Advance();
 		removeSpaces();
-
-		char x = stream->GetCurrentByte();
-		Comparation *condition;
-
-		if(ComparativeInstructionMap.find(x) != ComparativeInstructionMap.end())
-			condition = ComparativeInstructionMap[x]();
-		else
-		{
-			int line = stream->GetCurrentPosition().line;
-			int column = stream->GetCurrentPosition().column;
-			if(x == '(' || InstructionMap.find(x) != InstructionMap.end())
-				throw Error(ParsingError, line, column, "expected comparing instruction");
-			else throw Error(ParsingError, line, column, std::string("undefined instruction '") + x + "'");
-		}
-
-		removeSpaces();
-		if(stream->GetCurrentByte() != ':')
-		{
-			int line = stream->GetCurrentPosition().line;
-			int column = stream->GetCurrentPosition().column;
-			throw Error(ParsingError, line, column, "expected ':'");
-		}
-		stream->Advance();
-		removeSpaces();
-
-		If *instruction = new If();
-
-		instruction->Condition(condition);
-
-		Instruction *ifInstruction = line();
-		while(ifInstruction != NULL && stream->GetCurrentByte() != ']')
-		{
-			instruction->GetInstructionBlock()->push_back(ifInstruction);
-			ifInstruction = line();
-		}
-
-		stream->Advance();
-
-		return instruction;
-
 	}
 	else
 	{
 		int line = stream->GetCurrentPosition().line;
 		int column = stream->GetCurrentPosition().column;
-		throw Error(ParsingError, line, column, "expected condition statement");
+		errorList.addError(Error(ParsingError, line, column, "expected condition statement"));
+
+		invalid = true;
+		//return (Instruction*)new InvalidInstruction();
 	}
 
-	return NULL;
+	char x = stream->GetCurrentByte();
+	Comparation *condition;
+
+
+	if(ComparativeInstructionMap.find(x) != ComparativeInstructionMap.end())
+		condition = ComparativeInstructionMap[x]();
+	else
+	{
+		int line = stream->GetCurrentPosition().line;
+		int column = stream->GetCurrentPosition().column;
+		if(x == '(' || InstructionMap.find(x) != InstructionMap.end())
+			errorList.addError(Error(ParsingError, line, column, "expected comparing instruction"));
+		else errorList.addError(Error(ParsingError, line, column, std::string("undefined instruction '") + x + "'"));
+			condition =  NULL;
+		invalid = true;
+	}
+
+	removeSpaces();
+	if(stream->GetCurrentByte() != ':')
+	{
+		int line = stream->GetCurrentPosition().line;
+		int column = stream->GetCurrentPosition().column;
+		errorList.addError(Error(ParsingError, line, column, "expected  ':'"));
+
+		invalid = true;
+	}
+	else
+		stream->Advance();
+	removeSpaces();
+
+	If *instruction = new If();
+
+	instruction->Condition(condition);
+
+	Instruction *ifInstruction = line();
+	while(ifInstruction != NULL && ifInstruction != EOF_INDICATOR && stream->GetCurrentByte() != ']')
+	{
+		instruction->GetInstructionBlock()->push_back(ifInstruction);
+		ifInstruction = line();
+	}
+
+	if(ifInstruction == EOF_INDICATOR)
+	{
+		int line = ifPosition.line;
+		int column = ifPosition.column;
+		errorList.addError(Error(ParsingError, line, column, "if not ended"));
+
+		invalid = true;
+	}
+
+	stream->Advance();
+
+	if(invalid)
+		return (Instruction*) new InvalidInstruction();
+	return instruction;
 }
 
 
@@ -405,7 +458,7 @@ Expression* StackedInterpreter::expression()
 	{
 		int line = stream->GetCurrentPosition().line;
 		int column = stream->GetCurrentPosition().column;
-		throw Error(ParsingError, line, column, "syntax error, expression must be put inside '()'. expected expression");
+		errorList.addError(Error(ParsingError, line, column, "syntax error, expression must be put inside '()'. expected expression"));
 	}
 
 	removeSpaces();
@@ -426,7 +479,7 @@ Expression* StackedInterpreter::expression()
 	{
 		int line = stream->GetCurrentPosition().line;
 		int column = stream->GetCurrentPosition().column;
-		throw Error(ParsingError, line, column, "expected ')'\n");
+		errorList.addError(Error(ParsingError, line, column, "expected ')'\n"));
 	}
 
 	Expression *instruction;
@@ -489,7 +542,7 @@ Expression* StackedInterpreter::factor()
 	{
 		int line = stream->GetCurrentPosition().line;
 		int column = stream->GetCurrentPosition().column;
-		throw Error(ParsingError, line, column, "expected numeric constant or result from \"\n");
+		errorList.addError(Error(ParsingError, line, column, "expected numeric constant or result from \""));
 	}
 
 	return x;
