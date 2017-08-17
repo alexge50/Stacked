@@ -1,5 +1,7 @@
 # Stacked  
-A programming language made for fun, that uses aspects from brainfuck and assembly. Only stacks can be used.
+**stacked** (adjective) - (of a number of things) put or arranged in a stack or stacks.  
+Stacked is a programming language that allows to use only stacks. It is trying to challenge the user to come with interesting solutions for mundane tasks that are easily implemented in other languages. 
+
 ## Syntax  
 Stacked is similar to assembly, from a syntax stand point of view. Each line contains an instruction. But, unlike assembly there are a lot less instructions, and the instructions operate only on stacks.  
 Each stacks is identified by its name, which is a string. The stack specific instructions are the following:  
