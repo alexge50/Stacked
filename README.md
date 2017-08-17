@@ -94,5 +94,5 @@ The if block looks as follows:
 ```
 
 Upcoming features:
-* function calls (ie. call a set of instruction from another file) 
-* an parsing error log for the entire file  
+* useful arguments 
+* function calls (ie. call a set of instruction from another file)  
