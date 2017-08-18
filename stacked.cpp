@@ -28,13 +28,15 @@
 #include "Signals.h"
 #include "Stream/FileStream.h"
 
+#include "CommandLineArguments.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 
 void print_help(char * name)
 {
 	printf("This program shall be used as follows:\n"
-		   "%s <filename to be interpreted> \n", name);
+		   "%s --file <filename to be interpreted> \n", name);
 }
 
 int main(int argc, char *argv[])
@@ -47,17 +49,22 @@ Under certain conditions; \n\n\n");
 
 
 
-	if(argc != 2)
+	Configuration config;
+
+	try
 	{
-		print_help(argv[0]);
-		return 0;
+		config = ParseCommandLineArguments(argc, argv);
+	}
+	catch(std::string& e)
+	{
+		std::cout << e << std::endl;
 	}
 
-	printf("%s:\n", argv[1]);
+	printf("%s:\n", config.file.c_str());
 
 	FileStream *file = new FileStream;
 
-	bool ok = file->OpenFile(std::string(argv[1]));
+	bool ok = file->OpenFile(std::string(config.file));
 
 	if(ok != true)
 	{
