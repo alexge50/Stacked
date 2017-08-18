@@ -13,8 +13,10 @@
 struct Configuration
 {
 	std::string file;
+	bool execute;
 };
 
 Configuration ParseCommandLineArguments(int argc, char *argv[]);
+std::string GetHelpString(char * name);
 
 #endif /* SRC_COMMANDLINEARGUMENTS_H_ */

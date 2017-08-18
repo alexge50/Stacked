@@ -33,33 +33,33 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void print_help(char * name)
-{
-	printf("This program shall be used as follows:\n"
-		   "%s --file <filename to be interpreted> \n", name);
-}
-
-int main(int argc, char *argv[])
+void printCopyrightPlate()
 {
 	printf("Stacked  Copyright (C) 2017  alexge50\n\
 \n\
 This program comes with ABSOLUTELY NO WARRANTY; \n\
 This is free software, and you are welcome to redistribute it\n\
 Under certain conditions; \n\n\n");
+}
+
+void checkConfiguration(Configuration *);
 
 
-
+int main(int argc, char *argv[])
+{
 	Configuration config;
 
 	try
 	{
 		config = ParseCommandLineArguments(argc, argv);
+		checkConfiguration(&config);
 	}
 	catch(std::string& e)
 	{
-		std::cout << e << std::endl;
+		printf("%s\n", e.c_str());
 	}
 
+	printCopyrightPlate();
 	printf("%s:\n", config.file.c_str());
 
 	FileStream *file = new FileStream;
@@ -85,7 +85,7 @@ Under certain conditions; \n\n\n");
 		langManager.addSignal<SyscallSignal>("system");
 		langManager.addSignal<DebugSignal>("debug");
 
-		program->Run(&langManager);
+		if(config.execute) program->Run(&langManager);
 	}
 	catch (Error &error)
 	{
@@ -97,4 +97,10 @@ Under certain conditions; \n\n\n");
 	}
 
 	return 0;
+}
+
+void checkConfiguration(Configuration *c)
+{
+	if(c->file == std::string(""))
+		throw std::string("Error: file to run not specified. Specify the file to run using '--file' option; use '--help' option for more information");
 }
