@@ -53,48 +53,48 @@ int main(int argc, char *argv[])
 	{
 		config = ParseCommandLineArguments(argc, argv);
 		checkConfiguration(&config);
+
+        printCopyrightPlate();
+        printf("%s:\n", config.file.c_str());
+
+        FileStream *file = new FileStream;
+
+        bool ok = file->OpenFile(std::string(config.file));
+
+        if(ok != true)
+        {
+            printf("The file you told me to run does not exist.");
+            return 0;
+        }
+
+        StackedInterpreter interp;
+        StackedLanguageManager langManager;
+
+        interp.setStream(file);
+        Program *program = interp.program();
+
+        langManager.addSignal<OutputSignal>("print");
+        langManager.addSignal<InputSignal>("scan");
+        langManager.addSignal<SyscallSignal>("system");
+        langManager.addSignal<DebugSignal>("debug");
+
+        if(config.execute) program->Run(&langManager);
 	}
 	catch(std::string& e)
 	{
 		printf("%s\n", e.c_str());
+        return -1;
 	}
-
-	printCopyrightPlate();
-	printf("%s:\n", config.file.c_str());
-
-	FileStream *file = new FileStream;
-
-	bool ok = file->OpenFile(std::string(config.file));
-
-	if(ok != true)
-	{
-		printf("The file you told me to run does not exist.");
-		return 0;
-	}
-
-	try
-	{
-		StackedInterpreter interp;
-		StackedLanguageManager langManager;
-
-		interp.setStream(file);
-		Program *program = interp.program();
-
-		langManager.addSignal<OutputSignal>("print");
-		langManager.addSignal<InputSignal>("scan");
-		langManager.addSignal<SyscallSignal>("system");
-		langManager.addSignal<DebugSignal>("debug");
-
-		if(config.execute) program->Run(&langManager);
-	}
-	catch (Error &error)
-	{
-		printf("%s", error.getPrintableString().c_str());
-	}
-	catch(ErrorList &error)
-	{
-		printf("%s", error.getPrintableString().c_str());
-	}
+    catch (Error &error)
+    {
+        printf("%s", error.getPrintableString().c_str());
+        return -1;
+    }
+    catch(ErrorList &error)
+    {
+        printf("%s", error.getPrintableString().c_str());
+        return -1;
+    }
 
 	return 0;
 }
