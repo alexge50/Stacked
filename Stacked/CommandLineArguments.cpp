@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include <getopt.h>
 
-#include <stdio.h>
+#include <sstream>
 
 static struct option longOptions [] = {
 		{"file", required_argument, 0, 'f'},
@@ -61,12 +61,12 @@ Configuration ParseCommandLineArguments(int argc, char *argv[])
 
 std::string GetHelpString(char * name)
 {
-	char helpString[2048];
+	std::stringstream helpString;
 
-	sprintf(helpString, "Usage: %s --file <file name> [options]\n", name);
-	sprintf(helpString, "Options: ");
-	sprintf(helpString, "	--file (-f)		     Sets the file to be interpreted and executed, it is mandatory\n");
-	sprintf(helpString, "	--no-exec   		 Interprets the code, but does not execute it\n");
+	helpString << "Usage: %s --file <file name> [options]\n"
+			   << "Options: "
+			   << "	--file (-f)		     Sets the file to be interpreted and executed, it is mandatory\n"
+			   << "	--no-exec   		 Interprets the code, but does not execute it\n";
 
-	return std::string(helpString);
+	return helpString.str();
 }
