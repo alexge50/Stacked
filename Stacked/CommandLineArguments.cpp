@@ -64,7 +64,7 @@ std::string GetHelpString(char * name)
 	std::stringstream helpString;
 
 	helpString << "Usage: %s --file <file name> [options]\n"
-			   << "Options: "
+			   << "Options: \n"
 			   << "	--file (-f)		     Sets the file to be interpreted and executed, it is mandatory\n"
 			   << "	--no-exec   		 Interprets the code, but does not execute it\n";
 
