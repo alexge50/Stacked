@@ -3,7 +3,7 @@ project(Stacked)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES
+set(LIBRARY_SOURCE_FILES
         src/AbstractSyntaxTree/Comparation/Equal.cpp
         include/AbstractSyntaxTree/Comparation/Equal.h
         src/AbstractSyntaxTree/Comparation/GreaterThan.cpp
@@ -59,6 +59,10 @@ set(SOURCE_FILES
         src/Stream/IStream.cpp
         include/Stream/IStream.h
         include/AbstractSyntaxTree.h
+)
+
+set(SOURCE_FILES
+
         Stacked/CommandLineArguments.cpp
         Stacked/CommandLineArguments.h
         src/Error.cpp
@@ -72,6 +76,12 @@ set(SOURCE_FILES
         src/StackedLanguageManager.cpp
         include/StackedLanguageManager.h)
 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 include_directories(include)
 
-add_executable(Stacked ${SOURCE_FILES})
+add_executable(Stacked ${SOURCE_FILES} ${LIBRARY_SOURCE_FILES})
+add_library(stacked STATIC ${LIBRARY_SOURCE_FILES})
+add_library(stacked_shared SHARED ${LIBRARY_SOURCE_FILES})
