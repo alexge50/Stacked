@@ -18,7 +18,7 @@
  */
 
 
-#include <AbstractSyntaxTree/Comparation.h>
+#include <Stacked/AbstractSyntaxTree/Comparation.h>
 
 Comparation::Comparation()
 {

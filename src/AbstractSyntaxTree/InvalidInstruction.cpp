@@ -17,9 +17,9 @@
  *
  */
 
-#include <AbstractSyntaxTree/InvalidInstruction.h>
+#include <Stacked/AbstractSyntaxTree/InvalidInstruction.h>
 
-#include <Error.h>
+#include <Stacked/Error.h>
 
 InvalidInstruction::InvalidInstruction()
 {

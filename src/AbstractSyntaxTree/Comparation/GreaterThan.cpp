@@ -19,7 +19,7 @@
 
 
 
-#include <AbstractSyntaxTree/Comparation/GreaterThan.h>
+#include <Stacked/AbstractSyntaxTree/Comparation/GreaterThan.h>
 
 GreaterThan::GreaterThan()
 {

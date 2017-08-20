@@ -18,7 +18,7 @@
  */
 
 
-#include <AbstractSyntaxTree/Comparation/NotEmpty.h>
+#include <Stacked/AbstractSyntaxTree/Comparation/NotEmpty.h>
 
 NotEmpty::NotEmpty()
 {

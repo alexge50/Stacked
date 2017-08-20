@@ -18,7 +18,7 @@
  */
 
 
-#include <AbstractSyntaxTree/ResetStack.h>
+#include <Stacked/AbstractSyntaxTree/ResetStack.h>
 
 ResetStack::ResetStack()
 {

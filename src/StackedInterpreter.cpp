@@ -18,11 +18,11 @@
  */
 
 
-#include <StackedInterpreter.h>
+#include <Stacked/StackedInterpreter.h>
 #include <stdio.h>
 #include <ctype.h>
 
-#include <Stream/IStream.h>
+#include <Stacked/Stream/IStream.h>
 
 #define EOF_INDICATOR ((Instruction*)-1)
 

@@ -18,7 +18,7 @@
  */
 
 
-#include <AbstractSyntaxTree/Comparation/Equal.h>
+#include <Stacked/AbstractSyntaxTree/Comparation/Equal.h>
 
 Equal::Equal()
 {

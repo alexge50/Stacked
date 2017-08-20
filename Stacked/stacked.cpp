@@ -20,15 +20,15 @@
 
 #include <iostream>
 
-#include "../include/StackedInterpreter.h"
-#include "../include/StackedLanguageManager.h"
-#include "../include/AbstractSyntaxTree/Program.h"
+#include <Stacked/StackedInterpreter.h>
+#include <Stacked/StackedLanguageManager.h>
+#include <Stacked/AbstractSyntaxTree/Program.h>
 
-#include "../include/Error.h"
-#include "Signals.h"
-#include "../include/Stream/FileStream.h"
+#include <Stacked/Error.h>
+#include <Stacked/Stream/FileStream.h>
 
 #include "CommandLineArguments.h"
+#include "Signals.h"
 
 #include <stdlib.h>
 #include <stdio.h>

@@ -18,7 +18,7 @@
  */
 
 
-#include <AbstractSyntaxTree/SignalInstruction.h>
+#include <Stacked/AbstractSyntaxTree/SignalInstruction.h>
 
 SignalInstruction::SignalInstruction()
 {

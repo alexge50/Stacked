@@ -20,9 +20,9 @@
 
 #define DEBUG 0
 
-#include <StackedLanguageManager.h>
-#include <Signal.h>
-#include <Error.h>
+#include <Stacked/StackedLanguageManager.h>
+#include <Stacked/Signal.h>
+#include <Stacked/Error.h>
 
 #define min(a, b) (a < b ? a : b)
 #define max(a, b) (a > b ? a : b)

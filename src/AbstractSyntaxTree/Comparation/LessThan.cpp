@@ -18,7 +18,7 @@
  */
 
 
-#include <AbstractSyntaxTree/Comparation/LessThan.h>
+#include <Stacked/AbstractSyntaxTree/Comparation/LessThan.h>
 
 LessThan::LessThan()
 {

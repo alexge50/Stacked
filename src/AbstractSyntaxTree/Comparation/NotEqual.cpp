@@ -18,7 +18,7 @@
  */
 
 
-#include <AbstractSyntaxTree/Comparation/NotEqual.h>
+#include <Stacked/AbstractSyntaxTree/Comparation/NotEqual.h>
 
 NotEqual::NotEqual()
 {

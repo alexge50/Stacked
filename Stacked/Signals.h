@@ -23,7 +23,7 @@
 #ifndef SRC_SIGNALS_H_
 #define SRC_SIGNALS_H_
 
-#include "../include/Signal.h"
+#include <Stacked/Signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
