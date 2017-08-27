@@ -49,10 +49,9 @@ int main(int argc, char *argv[])
 {
 	Configuration config;
 
-	try
-	{
-		config = ParseCommandLineArguments(argc, argv);
-		checkConfiguration(&config);
+	try {
+        config = ParseCommandLineArguments(argc, argv);
+        checkConfiguration(&config);
 
         printCopyrightPlate();
         printf("%s:\n", config.file.c_str());
@@ -61,37 +60,56 @@ int main(int argc, char *argv[])
 
         bool ok = file->OpenFile(std::string(config.file));
 
-        if(ok != true)
-        {
+        if (ok != true) {
             printf("The file you told me to run does not exist.");
             return 0;
         }
 
         StackedInterpreter interp;
-        StackedLanguageManager langManager;
 
         interp.setStream(file);
         Program *program = interp.program();
 
-        langManager.addSignal("print", (Signal*) new OutputSignal());
-        langManager.addSignal("scan", (Signal*) new InputSignal());
-        langManager.addSignal("system", (Signal*) new SyscallSignal());
-        langManager.addSignal("debug", (Signal*) new DebugSignal());
+        if (config.execute)
+        {
+            StackedLanguageManager langManager;
+            FILE *fin, *fout;
 
-        if(config.execute) program->Run(&langManager);
-	}
-	catch(std::string& e)
-	{
+            if(config.inputFile == std::string(""))
+                fin = stdin;
+            else
+            {
+                fin = fopen(config.inputFile.c_str(), "r");
+                printf("input from %s \n", config.inputFile.c_str());
+            }
+
+            if(config.outputFile == std::string(""))
+                fout = stdout;
+            else
+            {
+                fout = fopen(config.outputFile.c_str(), "w");
+                printf("output to %s \n", config.outputFile.c_str());
+            }
+
+            langManager.addSignal("system", (Signal *) new SyscallSignal());
+            langManager.addSignal("scan", (Signal *) new InputSignal(fin));
+            langManager.addSignal("print", (Signal *) new OutputSignal(fout));
+            langManager.addSignal("debug", (Signal *) new DebugSignal());
+
+            program->Run(&langManager);
+
+            if(fin != stdin) fclose(fin);
+            if(fout != stdout) fclose(fout);
+
+        }
+    } catch(std::string& e) {
 		printf("%s\n", e.c_str());
         return 0;
-	}
-    catch (Error &error)
-    {
+	} catch (Error &error) {
         printf("%s", error.getPrintableString().c_str());
         return -1;
     }
-    catch(ErrorList &error)
-    {
+    catch(ErrorList &error) {
         printf("%s", error.getPrintableString().c_str());
         return -1;
     }

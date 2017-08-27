@@ -13,7 +13,10 @@
 struct Configuration
 {
 	std::string file;
-	bool execute;
+	std::string outputFile, inputFile;
+    bool debug;
+    std::string debugFile;
+    bool execute;
 };
 
 Configuration ParseCommandLineArguments(int argc, char *argv[]);

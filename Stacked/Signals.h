@@ -30,7 +30,11 @@
 
 class OutputSignal: Signal
 {
+    FILE *fout;
 public:
+
+    OutputSignal(FILE *f)  {  fout = f;  }
+    ~OutputSignal() {}
 
 	virtual void init() override
 	{
@@ -43,7 +47,7 @@ public:
 
 		for(int i = output->stack.size() - 1; i >= 0; i--)
 		{
-			printf("%c", output->stack[i]);
+			fprintf(fout, "%c", output->stack[i]);
 			output->stack.pop_back();
 		}
 	}
@@ -51,7 +55,12 @@ public:
 
 class InputSignal: Signal
 {
+    FILE *fin;
 public:
+
+    InputSignal(FILE *f)  {  fin = f;  }
+    ~InputSignal() {}
+
 	virtual void init() override
 	{
 		makeStack("input");
@@ -63,7 +72,7 @@ public:
 		char buffer[1000];
 		int i = 0;
 
-		scanf("%s", buffer);
+		fscanf(fin, "%s", buffer);
 
 		while(buffer[i] != '\0')
 		{

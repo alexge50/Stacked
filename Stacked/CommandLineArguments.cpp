@@ -12,11 +12,17 @@
 #include <sstream>
 
 static struct option longOptions [] = {
-		{"file", required_argument, 0, 'f'},
 		{"help", no_argument, 0, 'h'},
+		{"file", required_argument, 0, 'f'},
 		{"no-exec", no_argument, 0, 257},
+        {"output-to", required_argument, 0, 258},
+        {"input-from", required_argument, 0, 259},
 		{0, 0, 0, 0}
 };
+
+std::string GetWarrantyString(char *string);
+
+std::string GetConditionsString(char *string);
 
 Configuration ParseCommandLineArguments(int argc, char *argv[])
 {
@@ -26,22 +32,33 @@ Configuration ParseCommandLineArguments(int argc, char *argv[])
 
 	/*default value*/
 	config.execute = true;
+    config.outputFile = "";
+    config.inputFile = "";
+    config.file = "";
 
 	while((optionCharacter = getopt_long(argc, argv, ":f:h", longOptions, &optionIndex)) != -1)
 	{
 		switch (optionCharacter)
 		{
-			case 'f':
-				config.file = std::string(optarg);
-				break;
-
 			case 'h':
 				throw GetHelpString(argv[0]);
-				break;
 
-			case 257: //--no-exec
+            case 'f':
+                config.file = std::string(optarg);
+                break;
+
+
+            case 257: //--no-exec
 				config.execute = false;
 				break;
+
+            case 258://--output-to
+                config.outputFile = std::string(optarg);
+                break;
+
+            case 259://--input-to
+                config.inputFile = std::string(optarg);
+                break;
 
 			case ':':
 				throw std::string(argv[0]) + std::string(": option '-" ) + std::string(1, (char)optopt) + "' requires an argument; use '--help' option for more information";
@@ -49,8 +66,8 @@ Configuration ParseCommandLineArguments(int argc, char *argv[])
 
 			case '?':
 			default:
-				throw std::string(argv[0]) + std::string(": option '-" ) + std::string(1, (char)optopt) + "' is invalid; use '--help' option for more information";
-				break;
+                throw std::string(argv[0]) + std::string(": option '-" ) + std::string(1, (char)optopt) + "' is invalid; use '--help' option for more information";
+                break;
 		}
 
 	}
@@ -58,6 +75,7 @@ Configuration ParseCommandLineArguments(int argc, char *argv[])
 	return config;
 
 }
+
 
 std::string GetHelpString(char * name)
 {
