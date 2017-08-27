@@ -73,14 +73,14 @@ int main(int argc, char *argv[])
         if (config.execute)
         {
             StackedLanguageManager langManager;
-            FILE *fin, *fout;
+            FILE *fin, *fout, *debugFile;
 
             if(config.inputFile == std::string(""))
                 fin = stdin;
             else
             {
                 fin = fopen(config.inputFile.c_str(), "r");
-                printf("input from %s \n", config.inputFile.c_str());
+                printf(": input from %s \n", config.inputFile.c_str());
             }
 
             if(config.outputFile == std::string(""))
@@ -88,18 +88,33 @@ int main(int argc, char *argv[])
             else
             {
                 fout = fopen(config.outputFile.c_str(), "w");
-                printf("output to %s \n", config.outputFile.c_str());
+                printf(": output to %s \n", config.outputFile.c_str());
             }
+
+            if(config.debug)
+            {
+                if(config.outputFile == std::string(""))
+                    debugFile = stderr;
+                else
+                {
+                    debugFile = fopen(config.debugFile.c_str(), "w");
+                    printf(": debug output set to %s \n", config.debugFile.c_str());
+                }
+            }
+            else debugFile = NULL;
 
             langManager.addSignal("system", (Signal *) new SyscallSignal());
             langManager.addSignal("scan", (Signal *) new InputSignal(fin));
             langManager.addSignal("print", (Signal *) new OutputSignal(fout));
             langManager.addSignal("debug", (Signal *) new DebugSignal());
 
+            langManager.setDebugFile(debugFile);
+
             program->Run(&langManager);
 
             if(fin != stdin) fclose(fin);
             if(fout != stdout) fclose(fout);
+            if(debugFile != NULL && debugFile != stderr) fclose(debugFile);
 
         }
     } catch(std::string& e) {

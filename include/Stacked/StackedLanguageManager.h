@@ -72,6 +72,9 @@ public:
 	/* Interpreter Utilities */
 	bool isInMemory(std::string);
 
+    /*Misc*/
+	void setDebugFile(FILE*);// activates the debug 'mode', outputs to specified FILE debug data.
+
 
 private:
 	//this is memory space of the language
@@ -83,6 +86,9 @@ private:
 private:
 	void assertStackExistence(std::string);
 	void assertSignalExistence(std::string);
+
+private:
+    FILE *debugFile;
 
 	friend class Signal;
 };

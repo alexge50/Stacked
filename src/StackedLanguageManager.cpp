@@ -29,22 +29,20 @@
 
 StackedLanguageManager::StackedLanguageManager()
 {
-	// TODO Auto-generated constructor stub
-
+    debugFile = NULL;
 }
 
 StackedLanguageManager::~StackedLanguageManager()
 {
-	// TODO Auto-generated destructor stub
 }
 
 void StackedLanguageManager::newStack(std::string name)
 {
 	m_memorySpace[name] = new Stack();
-#if DEBUG == 1
-	printf("declared new stack: %s\n", name.c_str());
-#endif
+
+    if(debugFile != NULL) fprintf(debugFile, "created new stack '%s'\n", name.c_str());
 }
+
 
 int StackedLanguageManager::nextElement(std::string name)
 {
@@ -52,9 +50,7 @@ int StackedLanguageManager::nextElement(std::string name)
 
 	int x = m_memorySpace[name]->nextElement();
 
-#if DEBUG == 1
-	printf("requested next element from '%s', returning: %d\n", name.c_str(), x);
-#endif
+    if(debugFile != NULL) fprintf(debugFile, "next element on stack '%s' returned the value %d\n", name.c_str(), x);
 
 	return x;
 }
@@ -64,9 +60,8 @@ void StackedLanguageManager::resetStack(std::string name)
     assertStackExistence(name);
 
 	m_memorySpace[name]->i = m_memorySpace[name]->stack.size() - 1;
-#if DEBUG == 1
-	printf("resetted stack '%s'\n", name.c_str());
-#endif
+
+    if(debugFile != NULL) fprintf(debugFile, "reset the stack '%s'\n", name.c_str());
 }
 
 void StackedLanguageManager::popStack(std::string name)
@@ -75,9 +70,8 @@ void StackedLanguageManager::popStack(std::string name)
 
 	m_memorySpace[name]->stack.pop_back();
 	m_memorySpace[name]->i = min(m_memorySpace[name]->i, m_memorySpace[name]->stack.size() - 1);
-#if DEBUG == 1
-	printf("popped from stack '%s'\n", name.c_str());
-#endif
+
+    if(debugFile != NULL) fprintf(debugFile, "popped from stack '%s'\n", name.c_str());
 }
 
 void StackedLanguageManager::pushStack(std::string name, int value)
@@ -87,9 +81,7 @@ void StackedLanguageManager::pushStack(std::string name, int value)
 	m_memorySpace[name]->stack.push_back(value);
 	m_memorySpace[name]->i = m_memorySpace[name]->stack.size() - 1;
 
-#if DEBUG == 1
-	printf("pushed %d into %s\n", value, name.c_str());
-#endif
+    if(debugFile != NULL) fprintf(debugFile, "pushed %d in the stack '%s'\n", value, name.c_str());
 }
 
 bool StackedLanguageManager::greaterThanOperation(std::string name1, std::string name2)
@@ -97,7 +89,12 @@ bool StackedLanguageManager::greaterThanOperation(std::string name1, std::string
     assertStackExistence(name1);
     assertStackExistence(name2);
 
-	return m_memorySpace[name1]->top() > m_memorySpace[name2]->top();
+    bool x = m_memorySpace[name1]->top() > m_memorySpace[name2]->top();
+
+    if(debugFile != NULL)
+        fprintf(debugFile, "greater than operation between '%s' and '%s' returned %s\n", name1.c_str(), name2.c_str(), x ? "true" : "false");
+
+	return x;
 }
 
 bool StackedLanguageManager::lessThanOperation(std::string name1, std::string name2)
@@ -105,7 +102,14 @@ bool StackedLanguageManager::lessThanOperation(std::string name1, std::string na
     assertStackExistence(name1);
     assertStackExistence(name2);
 
-	return m_memorySpace[name1]->top() < m_memorySpace[name2]->top();
+    if(debugFile != NULL) fprintf(debugFile, "");
+
+	bool x = m_memorySpace[name1]->top() < m_memorySpace[name2]->top();
+
+    if(debugFile != NULL)
+        fprintf(debugFile, "less than operation between '%s' and '%s' returned %s\n", name1.c_str(), name2.c_str(), x ? "true" : "false");
+
+    return x;
 }
 
 bool StackedLanguageManager::equalOperation(std::string name1, std::string name2)
@@ -113,7 +117,12 @@ bool StackedLanguageManager::equalOperation(std::string name1, std::string name2
     assertStackExistence(name1);
     assertStackExistence(name2);
 
-	return m_memorySpace[name1]->top() == m_memorySpace[name2]->top();
+    bool x = m_memorySpace[name1]->top() == m_memorySpace[name2]->top();
+
+    if(debugFile != NULL)
+        fprintf(debugFile, "equal operation between '%s' and '%s' returned %s\n", name1.c_str(), name2.c_str(), x ? "true" : "false");
+
+    return x;
 }
 
 bool StackedLanguageManager::notEqualOperation(std::string name1, std::string name2)
@@ -121,14 +130,23 @@ bool StackedLanguageManager::notEqualOperation(std::string name1, std::string na
     assertStackExistence(name1);
     assertStackExistence(name2);
 
-	return m_memorySpace[name1]->top() != m_memorySpace[name2]->top();
+    bool x = m_memorySpace[name1]->top() != m_memorySpace[name2]->top();
+
+    if(debugFile != NULL)
+        fprintf(debugFile, "not equal operation between '%s' and '%s' returned %s\n", name1.c_str(), name2.c_str(), x ? "true" : "false");
+
+    return x;
 }
 
 bool StackedLanguageManager::notEmptyOperation(std::string name)
 {
     assertStackExistence(name);
 
-	return !m_memorySpace[name]->empty();
+	bool x = !m_memorySpace[name]->empty();
+
+    if(debugFile != NULL) fprintf(debugFile, "not empty operation on '%s' returned %s\n", name.c_str(), x ? "true" : "false");
+
+    return x;
 }
 
 
@@ -142,10 +160,10 @@ bool StackedLanguageManager::isInMemory(std::string name)
 void StackedLanguageManager::signal(std::string name)
 {
     assertSignalExistence(name);
-#if DEBUG == 1
-	printf("called signal: %s\n", name.c_str());
-#endif
+
 	m_signalMap[name]->main();
+
+    if(debugFile != NULL) fprintf(debugFile, "called signal '%s'\n", name.c_str());
 }
 
 
@@ -171,6 +189,11 @@ void StackedLanguageManager::assertSignalExistence(std::string x)
 void StackedLanguageManager::addSignal(std::string name, Signal *signal)
 {
     m_signalMap[name] = configureSignal(signal);
+}
+
+void StackedLanguageManager::setDebugFile(FILE *f)
+{
+    debugFile = f;
 }
 
 /***********/
