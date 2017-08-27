@@ -1,0 +1,14 @@
+//
+// Created by alex on 8/27/17.
+//
+
+#ifndef STACKED_VERSION_H
+#define STACKED_VERSION_H
+
+#define HOSTTOOL_VERSION_MAJOR 0
+#define HOSTTOOL_VERSION_MINOR 8
+#define HOSTTOOL_VERSION_PATCH 2
+
+#define HOSTTOOL_VERSION_STRING ("0.8.2")
+
+#endif //STACKED_VERSION_H

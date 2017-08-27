@@ -27,8 +27,12 @@
 #include <Stacked/Error.h>
 #include <Stacked/Stream/FileStream.h>
 
+#include <Stacked/LanguageVersion.h>
+
 #include "CommandLineArguments.h"
 #include "Signals.h"
+#include "Version.h"
+
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -54,6 +58,9 @@ int main(int argc, char *argv[])
         checkConfiguration(&config);
 
         printCopyrightPlate();
+
+        printf("stacked language_version: %s\n", STACKED_LANGUAGE_VERSION_STRING);
+        printf("stacked host tool version: %s\n", HOSTTOOL_VERSION_STRING);
         printf("%s:\n", config.file.c_str());
 
         FileStream *file = new FileStream;
