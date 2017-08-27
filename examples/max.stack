@@ -1,0 +1,34 @@
+% array
+% maxstack
+
++ array (10)
++ array (20)
++ array (1)
++ array (5)
++ array (7)
+
++ maxstack (0 - 1)
+
+[ :e array:
+    ? array
+    { :> array maxstack:
+        + maxstack ("array)
+    }
+    - array
+]
+
+% number
+% zero
+
++ number ("maxstack)
++ zero (0)
+
++ output (10)
+
+[ : > number zero :
+	? number
+	+ output ((" number) % 10 + 48)
+	? number
+	+ number ((" number) / 10)
+]
+! print
