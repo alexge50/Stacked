@@ -69,15 +69,13 @@ public:
 	virtual void main() override
 	{
 		StackedLanguageManager::Stack *input = getStack("input");
-		char buffer[1000];
-		int i = 0;
+		char c;
 
-		fscanf(fin, "%s", buffer);
-
-		while(buffer[i] != '\0')
+        c = fgetc(fin);
+		while(c != '\n')
 		{
-			input->stack.push_back((int)(buffer[i]));
-			i++;
+			input->stack.push_back((int)(c));
+			c = fgetc(fin);
 		}
 
 	}
