@@ -59,22 +59,24 @@ set(LIBRARY_SOURCE_FILES
         src/Stream/IStream.cpp
         include/Stacked/Stream/IStream.h
         include/Stacked/AbstractSyntaxTree.h
-        include/Stacked/LanguageVersion.h)
-
-set(SOURCE_FILES
-        Stacked/CommandLineArguments.cpp
-        Stacked/CommandLineArguments.h
+        include/Stacked/LanguageVersion.h
         src/Error.cpp
         include/Stacked/Error.h
         src/Signal.cpp
         include/Stacked/Signal.h
-        Stacked/Signals.h
-        Stacked/stacked.cpp
         src/StackedInterpreter.cpp
         include/Stacked/StackedInterpreter.h
         src/StackedLanguageManager.cpp
         include/Stacked/StackedLanguageManager.h
-        Stacked/Version.h)
+        )
+
+set(SOURCE_FILES
+        Stacked/CommandLineArguments.cpp
+        Stacked/CommandLineArguments.h
+        Stacked/Version.h
+        Stacked/stacked.cpp
+        Stacked/Signals.h
+        )
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
