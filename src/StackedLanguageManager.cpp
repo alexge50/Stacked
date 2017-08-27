@@ -121,10 +121,11 @@ bool StackedLanguageManager::notEmptyOperation(std::string name)
 }
 
 
+/*
 bool StackedLanguageManager::isInMemory(std::string name)
 {
 	return m_memorySpace.find(name) != m_memorySpace.end();
-}
+}*/
 
 
 void StackedLanguageManager::signal(std::string name)
@@ -153,6 +154,11 @@ void StackedLanguageManager::assertSignalExistence(std::string x)
 {
 	if(m_signalMap.find(x) == m_signalMap.end())
 		throw Error(RuntimeError, -1, -1, std::string("signal '") + x + "' was not registered");
+}
+
+void StackedLanguageManager::addSignal(std::string name, Signal *signal)
+{
+    m_signalMap[name] = configureSignal(signal);
 }
 
 /***********/

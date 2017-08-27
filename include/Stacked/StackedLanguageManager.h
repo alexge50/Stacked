@@ -67,13 +67,7 @@ public:
 
 	/* utility functions */
 	void addCall(std::string); //unavailable
-
-	template<typename T>
-	void addSignal(std::string name)
-	{
-			m_signalMap[name] = configureSignal((Signal*) new T());
-	}
-
+	void addSignal(std::string name, Signal*);
 
 	/* Interpreter Utilities */
 	bool isInMemory(std::string);

@@ -73,17 +73,17 @@ int main(int argc, char *argv[])
         interp.setStream(file);
         Program *program = interp.program();
 
-        langManager.addSignal<OutputSignal>("print");
-        langManager.addSignal<InputSignal>("scan");
-        langManager.addSignal<SyscallSignal>("system");
-        langManager.addSignal<DebugSignal>("debug");
+        langManager.addSignal("print", (Signal*) new OutputSignal());
+        langManager.addSignal("scan", (Signal*) new InputSignal());
+        langManager.addSignal("system", (Signal*) new SyscallSignal());
+        langManager.addSignal("debug", (Signal*) new DebugSignal());
 
         if(config.execute) program->Run(&langManager);
 	}
 	catch(std::string& e)
 	{
 		printf("%s\n", e.c_str());
-        return -1;
+        return 0;
 	}
     catch (Error &error)
     {
