@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
 
             if(config.debug)
             {
-                if(config.outputFile == std::string(""))
+                if(config.debugFile == std::string(""))
                     debugFile = stderr;
                 else
                 {
