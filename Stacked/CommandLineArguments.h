@@ -22,12 +22,13 @@
 #define SRC_COMMANDLINEARGUMENTS_H_
 
 #include <string>
+#include "DebugStackedLanguageManager.h"
 
 struct Configuration
 {
 	std::string file;
 	std::string outputFile, inputFile;
-    bool debug;
+    DebugLevel debugLevel;
     std::string debugFile;
     bool execute;
 };

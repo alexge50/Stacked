@@ -30,7 +30,7 @@ static struct option longOptions [] = {
 		{"no-exec", no_argument, 0, 257},
         {"output-file", required_argument, 0, 258},
         {"input-file", required_argument, 0, 259},
-        {"debug", no_argument, 0, 260},
+        {"debug", required_argument, 0, 260},
         {"debug-file", required_argument, 0, 261},
 		{0, 0, 0, 0}
 };
@@ -50,7 +50,7 @@ Configuration ParseCommandLineArguments(int argc, char *argv[])
     config.outputFile = "";
     config.inputFile = "";
     config.file = "";
-    config.debug = false;
+    config.debugLevel = DEBUG_OFF;
     config.debugFile = "";
 
 	while((optionCharacter = getopt_long(argc, argv, ":f:h", longOptions, &optionIndex)) != -1)
@@ -78,8 +78,16 @@ Configuration ParseCommandLineArguments(int argc, char *argv[])
                 break;
 
             case 260://--debug
-                config.debug = true;
+            {
+                std::string soptarg = std::string(optarg);
+                if (soptarg == std::string("on"))
+                    config.debugLevel = DEBUG_ON;
+                else if (soptarg == std::string("off"))
+                    config.debugLevel = DEBUG_OFF;
+                else if (soptarg == std::string("verbose"))
+                    config.debugLevel = DEBUG_VERBOSE;
                 break;
+            }
 
             case 261://--debug-file
                 config.debugFile = std::string(optarg);

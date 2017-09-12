@@ -29,6 +29,7 @@
 
 #include <Stacked/LanguageVersion.h>
 
+#include "DebugStackedLanguageManager.h"
 #include "CommandLineArguments.h"
 #include "Signals.h"
 #include "Version.h"
@@ -80,7 +81,7 @@ int main(int argc, char *argv[])
 
         if (config.execute)
         {
-            IStackedLanguageManager *langManager = new StackedLanguageManager;
+            IStackedLanguageManager *langManager;
             FILE *fin, *fout, *debugFile;
 
             if(config.inputFile == std::string(""))
@@ -99,7 +100,7 @@ int main(int argc, char *argv[])
                 printf(": output to %s \n", config.outputFile.c_str());
             }
 
-            if(config.debug)
+            if(config.debugLevel != DEBUG_OFF)
             {
                 if(config.debugFile == std::string(""))
                     debugFile = stderr;
@@ -110,6 +111,8 @@ int main(int argc, char *argv[])
                 }
             }
             else debugFile = NULL;
+
+            langManager = new DebugStackedLanguageManager(debugFile, config.debugLevel);
 
             langManager->addSignal("system", (Signal *) new SyscallSignal());
             langManager->addSignal("scan", (Signal *) new InputSignal(fin));

@@ -16,7 +16,7 @@ enum DebugLevel
     DEBUG_VERBOSE = 2
 };
 
-class DebugStackedLanguageManager : IStackedLanguageManager
+class DebugStackedLanguageManager : public IStackedLanguageManager
 {
 public:
     DebugStackedLanguageManager(FILE *debugFile, DebugLevel debugLevel);
