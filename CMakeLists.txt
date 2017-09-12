@@ -78,7 +78,8 @@ set(SOURCE_FILES
         Stacked/Version.h
         Stacked/stacked.cpp
         Stacked/Signals.h
-       )
+        Stacked/DebugStackedLanguageManager.cpp
+        Stacked/DebugStackedLanguageManager.h)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
