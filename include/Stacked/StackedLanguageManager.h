@@ -40,7 +40,6 @@ public:
     virtual bool isInMemory(std::string);
     virtual Stack* getStack(std::string);
 
-protected:
     virtual void internalAddSignal(std::string name, Signal*);
 
 private:
