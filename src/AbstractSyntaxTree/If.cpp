@@ -31,7 +31,7 @@ If::~If()
 	// TODO Auto-generated destructor stub
 }
 
-void If::Run(StackedLanguageManager* languageManager)
+void If::Run(IStackedLanguageManager* languageManager)
 {
 	m_condition->Run(languageManager);
 

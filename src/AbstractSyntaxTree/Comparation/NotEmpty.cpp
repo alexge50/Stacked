@@ -31,7 +31,7 @@ NotEmpty::~NotEmpty()
 	// TODO Auto-generated destructor stub
 }
 
-void NotEmpty::Run(StackedLanguageManager* languageManager)
+void NotEmpty::Run(IStackedLanguageManager* languageManager)
 {
 	m_result = languageManager->notEmptyOperation(m_left);
 }

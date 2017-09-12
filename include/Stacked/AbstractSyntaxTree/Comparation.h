@@ -29,7 +29,7 @@ public:
 	Comparation();
 	virtual ~Comparation();
 
-	virtual void Run(StackedLanguageManager*) = 0;
+	virtual void Run(IStackedLanguageManager*) = 0;
 
 	void Arguments(std::string, std::string);
 	bool Result();

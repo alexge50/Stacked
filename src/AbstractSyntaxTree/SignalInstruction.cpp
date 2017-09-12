@@ -31,7 +31,7 @@ SignalInstruction::~SignalInstruction()
 	// TODO Auto-generated destructor stub
 }
 
-void SignalInstruction::Run(StackedLanguageManager *manager)
+void SignalInstruction::Run(IStackedLanguageManager *manager)
 {
 	manager->signal(m_signalName);
 }

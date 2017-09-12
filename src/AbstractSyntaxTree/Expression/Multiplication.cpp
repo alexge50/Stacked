@@ -31,7 +31,7 @@ Multiplication::~Multiplication()
 	// TODO Auto-generated destructor stub
 }
 
-void Multiplication::Run(StackedLanguageManager* languageManager)
+void Multiplication::Run(IStackedLanguageManager* languageManager)
 {
 	int left, right;
 

@@ -31,7 +31,7 @@ ConstNumber::~ConstNumber()
 	// TODO Auto-generated destructor stub
 }
 
-void ConstNumber::Run(StackedLanguageManager*)
+void ConstNumber::Run(IStackedLanguageManager*)
 {
 	m_result = m_value;
 }

@@ -29,7 +29,7 @@ public:
 	Addition();
 	virtual ~Addition();
 
-	virtual void Run(StackedLanguageManager*) override;
+	virtual void Run(IStackedLanguageManager*) override;
 };
 
 #endif /* SRC_ABSTRACT_SYNTAX_TREE_EXPRESSION_ADDITION_H_ */

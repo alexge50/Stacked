@@ -32,7 +32,7 @@ Mod::~Mod()
 	// TODO Auto-generated destructor stub
 }
 
-void Mod::Run(StackedLanguageManager* languageManager)
+void Mod::Run(IStackedLanguageManager* languageManager)
 {
 	int left, right;
 

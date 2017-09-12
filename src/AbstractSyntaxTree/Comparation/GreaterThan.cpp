@@ -32,7 +32,7 @@ GreaterThan::~GreaterThan()
 	// TODO Auto-generated destructor stub
 }
 
-void GreaterThan::Run(StackedLanguageManager* languageManager)
+void GreaterThan::Run(IStackedLanguageManager* languageManager)
 {
 	m_result = languageManager->greaterThanOperation(m_left, m_right);
 }

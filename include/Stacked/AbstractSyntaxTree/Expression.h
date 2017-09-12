@@ -29,7 +29,7 @@ public:
 	Expression();
 	virtual ~Expression();
 
-	virtual void Run(StackedLanguageManager*) = 0;
+	virtual void Run(IStackedLanguageManager*) = 0;
 
 	void Operands(Expression* , Expression*);
 	int Result();

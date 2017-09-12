@@ -30,7 +30,7 @@ public:
 	virtual ~InvalidInstruction();
 
 public:
-	virtual void Run(StackedLanguageManager*) override;
+	virtual void Run(IStackedLanguageManager*) override;
 
 };
 

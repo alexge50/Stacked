@@ -31,7 +31,7 @@ Addition::~Addition()
 	// TODO Auto-generated destructor stub
 }
 
-void Addition::Run(StackedLanguageManager* languageManager)
+void Addition::Run(IStackedLanguageManager* languageManager)
 {
 	int left, right;
 

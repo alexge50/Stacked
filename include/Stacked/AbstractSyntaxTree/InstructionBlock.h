@@ -31,12 +31,12 @@ public:
 	InstructionBlock();
 	virtual ~InstructionBlock();
 
-	virtual void Run(StackedLanguageManager*) override;
+	virtual void Run(IStackedLanguageManager*) override;
 
 	std::vector<Instruction*>* GetInstructionBlock();
 
 protected:
-	void RunInstructionBlock(StackedLanguageManager* );
+	void RunInstructionBlock(IStackedLanguageManager* );
 	std::vector<Instruction*> m_instructionList;
 };
 

@@ -80,7 +80,6 @@ private:
 	typedef std::function<Instruction*(void)> InstructionDelegate;
 	typedef std::function<Comparation*(void)> ComparativeInstructionDelegate;
 
-	StackedLanguageManager manager;
 	std::map<char, InstructionDelegate> InstructionMap;
 	std::map<char, ComparativeInstructionDelegate> ComparativeInstructionMap;
 

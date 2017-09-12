@@ -30,7 +30,7 @@ public:
 	PushStack();
 	virtual ~PushStack();
 
-	virtual void Run(StackedLanguageManager *manager) override;
+	virtual void Run(IStackedLanguageManager *manager) override;
 
 	void Arguments(std::string, Expression*);
 

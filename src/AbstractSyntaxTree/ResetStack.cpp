@@ -31,7 +31,7 @@ ResetStack::~ResetStack()
 	// TODO Auto-generated destructor stub
 }
 
-void ResetStack::Run(StackedLanguageManager *manager)
+void ResetStack::Run(IStackedLanguageManager *manager)
 {
 	manager->resetStack(m_stackName);
 }

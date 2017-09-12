@@ -66,8 +66,10 @@ set(LIBRARY_SOURCE_FILES
         include/Stacked/Signal.h
         src/StackedInterpreter.cpp
         include/Stacked/StackedInterpreter.h
+        include/Stacked/IStackedLanguageManager.h
         src/StackedLanguageManager.cpp
         include/Stacked/StackedLanguageManager.h
+        src/Stack.cpp include/Stacked/Stack.h
         )
 
 set(SOURCE_FILES
@@ -76,7 +78,7 @@ set(SOURCE_FILES
         Stacked/Version.h
         Stacked/stacked.cpp
         Stacked/Signals.h
-        )
+       )
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)

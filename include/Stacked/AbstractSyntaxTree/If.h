@@ -30,7 +30,7 @@ public:
 	If();
 	virtual ~If();
 
-	virtual void Run(StackedLanguageManager*) override;
+	virtual void Run(IStackedLanguageManager*) override;
 
 	void Condition(Comparation* );
 

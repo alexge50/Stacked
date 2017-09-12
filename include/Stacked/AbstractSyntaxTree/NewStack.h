@@ -29,7 +29,7 @@ public:
 	NewStack();
 	virtual ~NewStack();
 
-	virtual void Run(StackedLanguageManager *manager) override;
+	virtual void Run(IStackedLanguageManager *manager) override;
 
 	void Argument(std::string);
 

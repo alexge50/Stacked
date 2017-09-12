@@ -31,7 +31,7 @@ PopStack::~PopStack()
 	// TODO Auto-generated destructor stub
 }
 
-void PopStack::Run(StackedLanguageManager *manager)
+void PopStack::Run(IStackedLanguageManager *manager)
 {
 	manager->popStack(m_stackName);
 }

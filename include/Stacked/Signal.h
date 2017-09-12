@@ -21,9 +21,10 @@
 #ifndef SRC_SIGNAL_H_
 #define SRC_SIGNAL_H_
 
-#include <Stacked/StackedLanguageManager.h>
 #include <string>
+#include "Stack.h"
 
+class IStackedLanguageManager;
 
 class Signal
 {
@@ -36,14 +37,15 @@ public:
 	virtual void main() = 0;
 
 public:
-	StackedLanguageManager::Stack* getStack(std::string);
+	Stack* getStack(std::string);
 	void makeStack(std::string);
 
 protected:
 
-	StackedLanguageManager *owner;
+	IStackedLanguageManager *owner;
 
-friend class StackedLanguageManager;
+protected:
+	friend class IStackedLanguageManager;
 
 };
 

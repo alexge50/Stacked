@@ -29,7 +29,7 @@ public:
 	ConstNumber();
 	virtual ~ConstNumber();
 
-	virtual void Run(StackedLanguageManager*) override;
+	virtual void Run(IStackedLanguageManager*) override;
 
 	void Number(int);
 

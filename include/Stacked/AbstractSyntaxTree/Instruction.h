@@ -21,7 +21,7 @@
 #ifndef SRC_ABSTRACT_SYNTAX_TREE_INSTRUCTION_H_
 #define SRC_ABSTRACT_SYNTAX_TREE_INSTRUCTION_H_
 
-#include <Stacked/StackedLanguageManager.h>
+#include <Stacked/IStackedLanguageManager.h>
 
 class Instruction
 {
@@ -30,7 +30,7 @@ public:
 	virtual ~Instruction();
 
 public:
-	virtual void Run(StackedLanguageManager*) = 0;
+	virtual void Run(IStackedLanguageManager*) = 0;
 };
 
 #endif /* SRC_ABSTRACT_SYNTAX_TREE_INSTRUCTION_H_ */

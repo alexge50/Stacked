@@ -31,7 +31,7 @@ Subtraction::~Subtraction()
 	// TODO Auto-generated destructor stub
 }
 
-void Subtraction::Run(StackedLanguageManager* languageManager)
+void Subtraction::Run(IStackedLanguageManager* languageManager)
 {
 	int left, right;
 

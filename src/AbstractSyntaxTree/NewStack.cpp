@@ -31,7 +31,7 @@ NewStack::~NewStack()
 	// TODO Auto-generated destructor stub
 }
 
-void NewStack::Run(StackedLanguageManager *manager)
+void NewStack::Run(IStackedLanguageManager *manager)
 {
 	manager->newStack(m_stackName);
 }

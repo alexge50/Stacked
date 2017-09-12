@@ -31,7 +31,7 @@ PushStack::~PushStack()
 	// TODO Auto-generated destructor stub
 }
 
-void PushStack::Run(StackedLanguageManager *manager)
+void PushStack::Run(IStackedLanguageManager *manager)
 {
 	m_value->Run(manager);
 	int value = m_value->Result();

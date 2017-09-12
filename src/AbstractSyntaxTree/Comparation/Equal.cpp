@@ -31,7 +31,7 @@ Equal::~Equal()
 	// TODO Auto-generated destructor stub
 }
 
-void Equal::Run(StackedLanguageManager* languageManager)
+void Equal::Run(IStackedLanguageManager* languageManager)
 {
 	m_result = languageManager->equalOperation(m_left, m_right);
 }

@@ -31,7 +31,7 @@ NextElement::~NextElement()
 	// TODO Auto-generated destructor stub
 }
 
-void NextElement::Run(StackedLanguageManager* languageManager)
+void NextElement::Run(IStackedLanguageManager* languageManager)
 {
 	m_result = languageManager->nextElement(m_stackName);
 }

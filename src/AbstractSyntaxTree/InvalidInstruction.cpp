@@ -32,7 +32,7 @@ InvalidInstruction::~InvalidInstruction()
 	// TODO Auto-generated destructor stub
 }
 
-void InvalidInstruction::Run(StackedLanguageManager*)
+void InvalidInstruction::Run(IStackedLanguageManager*)
 {
 	throw Error(RuntimeError, -1, -1, "hit invalid instruction");
 }

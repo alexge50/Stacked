@@ -29,7 +29,7 @@ public:
 	NotEqual();
 	virtual ~NotEqual();
 
-	virtual void Run(StackedLanguageManager*) override;
+	virtual void Run(IStackedLanguageManager*) override;
 };
 
 #endif /* SRC_ABSTRACTSYNTAXTREE_COMPARATION_NOTEQUAL_H_ */

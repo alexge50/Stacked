@@ -29,7 +29,7 @@ public:
 	GreaterThan();
 	virtual ~GreaterThan();
 
-	virtual void Run(StackedLanguageManager*) override;
+	virtual void Run(IStackedLanguageManager*) override;
 };
 
 #endif /* SRC_ABSTRACT_SYNTAX_TREE_COMPARATION_GREATERTHAN_H_ */

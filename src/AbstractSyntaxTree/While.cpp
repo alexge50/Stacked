@@ -31,7 +31,7 @@ While::~While()
 	// TODO Auto-generated destructor stub
 }
 
-void While::Run(StackedLanguageManager* languageManager)
+void While::Run(IStackedLanguageManager* languageManager)
 {
 	m_condition->Run(languageManager);
 

@@ -43,7 +43,7 @@ public:
 
 	virtual void main() override
 	{
-		StackedLanguageManager::Stack *output = getStack("output");
+		Stack *output = getStack("output");
 
 		for(int i = output->stack.size() - 1; i >= 0; i--)
 		{
@@ -68,7 +68,7 @@ public:
 
 	virtual void main() override
 	{
-		StackedLanguageManager::Stack *input = getStack("input");
+		Stack *input = getStack("input");
 		char c;
 
         c = fgetc(fin);
@@ -92,7 +92,7 @@ public:
 
 	virtual void main() override
 	{
-		StackedLanguageManager::Stack *_syscall = getStack("system");
+		Stack *_syscall = getStack("system");
 		std::string callString;
 
 		for(int i = _syscall->stack.size() - 1; i >= 0; i--)

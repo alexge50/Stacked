@@ -31,7 +31,7 @@ LessThan::~LessThan()
 	// TODO Auto-generated destructor stub
 }
 
-void LessThan::Run(StackedLanguageManager* languageManager)
+void LessThan::Run(IStackedLanguageManager* languageManager)
 {
 	m_result = languageManager->lessThanOperation(m_left, m_right);
 }

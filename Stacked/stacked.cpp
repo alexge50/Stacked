@@ -21,7 +21,7 @@
 #include <iostream>
 
 #include <Stacked/StackedInterpreter.h>
-#include <Stacked/StackedLanguageManager.h>
+#include <Stacked/IStackedLanguageManager.h>
 #include <Stacked/AbstractSyntaxTree/Program.h>
 
 #include <Stacked/Error.h>
@@ -36,6 +36,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <Stacked/StackedLanguageManager.h>
 
 void printCopyrightPlate()
 {
@@ -79,7 +80,7 @@ int main(int argc, char *argv[])
 
         if (config.execute)
         {
-            StackedLanguageManager langManager;
+            IStackedLanguageManager *langManager = new StackedLanguageManager;
             FILE *fin, *fout, *debugFile;
 
             if(config.inputFile == std::string(""))
@@ -110,14 +111,13 @@ int main(int argc, char *argv[])
             }
             else debugFile = NULL;
 
-            langManager.addSignal("system", (Signal *) new SyscallSignal());
-            langManager.addSignal("scan", (Signal *) new InputSignal(fin));
-            langManager.addSignal("print", (Signal *) new OutputSignal(fout));
-            langManager.addSignal("debug", (Signal *) new DebugSignal());
+            langManager->addSignal("system", (Signal *) new SyscallSignal());
+            langManager->addSignal("scan", (Signal *) new InputSignal(fin));
+            langManager->addSignal("print", (Signal *) new OutputSignal(fout));
+            langManager->addSignal("debug", (Signal *) new DebugSignal());
 
-            langManager.setDebugFile(debugFile);
 
-            program->Run(&langManager);
+            program->Run(langManager);
 
             if(fin != stdin) fclose(fin);
             if(fout != stdout) fclose(fout);

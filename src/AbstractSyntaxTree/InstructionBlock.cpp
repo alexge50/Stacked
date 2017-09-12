@@ -31,12 +31,12 @@ InstructionBlock::~InstructionBlock()
 	// TODO Auto-generated destructor stub
 }
 
-void InstructionBlock::Run(StackedLanguageManager* languageManager)
+void InstructionBlock::Run(IStackedLanguageManager* languageManager)
 {
 	RunInstructionBlock(languageManager);
 }
 
-void InstructionBlock::RunInstructionBlock(StackedLanguageManager* languageManager)
+void InstructionBlock::RunInstructionBlock(IStackedLanguageManager* languageManager)
 {
 	for(int i = 0; i < m_instructionList.size(); i++)
 	{

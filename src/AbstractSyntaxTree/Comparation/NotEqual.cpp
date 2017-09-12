@@ -31,7 +31,7 @@ NotEqual::~NotEqual()
 	// TODO Auto-generated destructor stub
 }
 
-void NotEqual::Run(StackedLanguageManager* languageManager)
+void NotEqual::Run(IStackedLanguageManager* languageManager)
 {
 	m_result = languageManager->notEqualOperation(m_left, m_right);
 }

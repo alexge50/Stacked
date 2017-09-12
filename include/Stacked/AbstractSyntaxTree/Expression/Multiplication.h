@@ -29,7 +29,7 @@ public:
 	Multiplication();
 	virtual ~Multiplication();
 
-	virtual void Run(StackedLanguageManager*) override;
+	virtual void Run(IStackedLanguageManager*) override;
 };
 
 #endif /* SRC_ABSTRACT_SYNTAX_TREE_EXPRESSION_MULTIPLICATION_H_ */

@@ -29,7 +29,7 @@ public:
 	NextElement();
 	virtual ~NextElement();
 
-	virtual void Run(StackedLanguageManager*) override;
+	virtual void Run(IStackedLanguageManager*) override;
 
 	void Argument(std::string);
 

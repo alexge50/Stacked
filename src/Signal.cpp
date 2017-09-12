@@ -19,6 +19,7 @@
 
 
 #include <Stacked/Signal.h>
+#include <Stacked/IStackedLanguageManager.h>
 
 Signal::Signal()
 {
@@ -30,9 +31,9 @@ Signal::~Signal()
 	// TODO Auto-generated destructor stub
 }
 
-StackedLanguageManager::Stack* Signal::getStack(std::string name)
+Stack* Signal::getStack(std::string name)
 {
-	return owner->m_memorySpace[name];
+	return owner->getStack(name);
 }
 
 void Signal::makeStack(std::string name)

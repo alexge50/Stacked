@@ -31,7 +31,7 @@ Division::~Division()
 	// TODO Auto-generated destructor stub
 }
 
-void Division::Run(StackedLanguageManager* languageManager)
+void Division::Run(IStackedLanguageManager* languageManager)
 {
 	int left, right;
 

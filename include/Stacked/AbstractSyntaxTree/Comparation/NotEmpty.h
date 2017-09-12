@@ -29,7 +29,7 @@ public:
 	NotEmpty();
 	virtual ~NotEmpty();
 
-	virtual void Run(StackedLanguageManager*) override;
+	virtual void Run(IStackedLanguageManager*) override;
 };
 
 #endif /* SRC_ABSTRACTSYNTAXTREE_COMPARATION_NOTEMPTY_H_ */
