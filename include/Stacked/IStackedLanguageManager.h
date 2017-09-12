@@ -1,5 +1,5 @@
 /*
- *   StackedLanguageManager.h
+ *   IStackedLanguageManager.h
  *   Copyright (C) 2017  alexge50
  *
  *   This program is free software: you can redistribute it and/or modify
