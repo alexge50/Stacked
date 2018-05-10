@@ -65,8 +65,6 @@ Program* StackedInterpreter::program()
 	while((i = line()) != EOF_INDICATOR)
 		program->GetInstructionBlock()->push_back(i), j ++;
 
-	//printf("%d operations parsed\n", program->GetInstructionBlock()->size());
-
 	if(!errorList.isEmpty())
 		throw errorList;
 
@@ -95,11 +93,7 @@ Instruction* StackedInterpreter::line()
 		readUntil('\n');
 
 		return (Instruction*)new InvalidInstruction();
-	}
-
-	removeSpaces();
-
-	return 0;
+    }
 }
 
 Expression* StackedInterpreter::mathBlock()
@@ -444,7 +438,6 @@ Comparation* StackedInterpreter::notEmptyInstruction()
 Expression* StackedInterpreter::expression()
 {
 	Expression *t1 = NULL, *t2 = NULL;
-	int sign = 1;
 
 	if(stream->GetCurrentByte() == '(')
 		stream->Advance();
@@ -458,12 +451,21 @@ Expression* StackedInterpreter::expression()
 	removeSpaces();
 	t1 = term();
 	removeSpaces();
-	if(stream->GetCurrentByte() == '+' || stream->GetCurrentByte() == '-')
+	while(stream->GetCurrentByte() == '+' || stream->GetCurrentByte() == '-')
 	{
-		sign = stream->GetCurrentByte() == '+' ? 1 : -1;
+		char op = stream->GetCurrentByte();
 		stream->Advance();
 		removeSpaces();
 		t2 = term();
+
+		Expression *c = t1;
+
+		if(op == '+')
+			t1 = new Addition();
+		else if(op == '-')
+			t1 = new Subtraction();
+
+		t1->Operands(c, t2);
 	}
 
 	removeSpaces();
@@ -476,43 +478,34 @@ Expression* StackedInterpreter::expression()
 		errorList.addError(Error(ParsingError, line, column, "expected ')'\n"));
 	}
 
-	Expression *instruction;
-
-	if(sign == +1)
-		instruction = new Addition();
-	else if(sign == -1)
-		instruction = new Subtraction();
-
-	instruction->Operands(t1, t2);
-
-	return instruction;
+	return t1;
 }
 
 Expression* StackedInterpreter::term()
 {
 	Expression *f1 = NULL, *f2 = NULL;
-	int sign = '*';
 
 	removeSpaces();
 	f1 = factor();
 	removeSpaces();
-	if(stream->GetCurrentByte() == '*' || stream->GetCurrentByte() == '/' || stream->GetCurrentByte() == '%')
+	while(stream->GetCurrentByte() == '*' || stream->GetCurrentByte() == '/' || stream->GetCurrentByte() == '%')
 	{
-		sign = stream->GetCurrentByte();
+		char op = stream->GetCurrentByte();
 		stream->Advance();
 		removeSpaces();
 		f2 = factor();
-	}
 
-	Expression *instruction;
+        Expression *c = f1;
 
-	if(sign == '*') instruction = new Multiplication();
-	else if(sign == '/') instruction = new Division();
-	else if(sign == '%') instruction = new Mod();
+        if(op == '*') f1 = new Multiplication();
+        else if(op == '/') f1 = new Division();
+        else if(op == '%') f1 = new Mod();
 
-	instruction->Operands(f1, f2);
+        f1->Operands(c, f2);
 
-	return instruction;
+    }
+
+	return f1;
 }
 
 Expression* StackedInterpreter::factor()

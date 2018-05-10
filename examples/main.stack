@@ -8,7 +8,7 @@
 
 [ : > number zero :
 	? number
-	+ output ((" number) % 10 + 48)
+	+ output ((" number) % 10 + 24 + 24)
 	? number
 	+ number ((" number) / 10)
 ]
