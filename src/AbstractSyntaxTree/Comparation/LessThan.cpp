@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/Comparation/LessThan.h>
 
-LessThan::LessThan()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-LessThan::~LessThan()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void LessThan::Run(IStackedLanguageManager* languageManager)
 {

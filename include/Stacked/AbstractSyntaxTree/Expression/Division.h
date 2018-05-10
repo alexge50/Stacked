@@ -26,8 +26,8 @@
 class Division: public Expression
 {
 public:
-	Division();
-	virtual ~Division();
+	Division() = default;
+	virtual ~Division() = default;
 
 	virtual void Run(IStackedLanguageManager*) override;
 };

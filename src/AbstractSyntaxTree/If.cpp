@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/If.h>
 
-If::If()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-If::~If()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void If::Run(IStackedLanguageManager* languageManager)
 {

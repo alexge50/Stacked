@@ -21,17 +21,8 @@
 
 #include <Stacked/Stream/FileStream.h>
 
-FileStream::FileStream()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-FileStream::~FileStream()
-{
-	// TODO Auto-generated destructor stub
-}
-
+FileStream::FileStream() = default;
+FileStream::~FileStream() = default;
 
 char FileStream::GetCurrentByte()
 {

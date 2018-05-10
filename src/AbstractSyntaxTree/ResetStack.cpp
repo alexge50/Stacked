@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/ResetStack.h>
 
-ResetStack::ResetStack()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-ResetStack::~ResetStack()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void ResetStack::Run(IStackedLanguageManager *manager)
 {

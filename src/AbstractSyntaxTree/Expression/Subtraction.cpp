@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/Expression/Subtraction.h>
 
-Subtraction::Subtraction()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-Subtraction::~Subtraction()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void Subtraction::Run(IStackedLanguageManager* languageManager)
 {

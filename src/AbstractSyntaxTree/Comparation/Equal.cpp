@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/Comparation/Equal.h>
 
-Equal::Equal()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-Equal::~Equal()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void Equal::Run(IStackedLanguageManager* languageManager)
 {

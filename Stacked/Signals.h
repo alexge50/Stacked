@@ -33,7 +33,9 @@ class OutputSignal: Signal
     FILE *fout;
 public:
 
-    OutputSignal(FILE *f)  {  fout = f;  }
+    OutputSignal(FILE *f):
+			fout(f)
+	{}
     ~OutputSignal() {}
 
 	virtual void init() override

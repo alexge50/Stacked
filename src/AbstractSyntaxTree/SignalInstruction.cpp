@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/SignalInstruction.h>
 
-SignalInstruction::SignalInstruction()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-SignalInstruction::~SignalInstruction()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void SignalInstruction::Run(IStackedLanguageManager *manager)
 {

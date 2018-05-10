@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/While.h>
 
-While::While()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-While::~While()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void While::Run(IStackedLanguageManager* languageManager)
 {

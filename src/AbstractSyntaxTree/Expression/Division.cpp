@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/Expression/Division.h>
 
-Division::Division()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-Division::~Division()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void Division::Run(IStackedLanguageManager* languageManager)
 {

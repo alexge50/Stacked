@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/Comparation.h>
 
-Comparation::Comparation()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-Comparation::~Comparation()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void Comparation::Arguments(std::string left, std::string right)
 {

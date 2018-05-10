@@ -19,12 +19,6 @@
 
 #include "DebugStackedLanguageManager.h"
 
-DebugStackedLanguageManager::DebugStackedLanguageManager(FILE *debugFile, DebugLevel debugLevel)
-{
-    m_debugFile = debugFile;
-    m_debugLevel = debugLevel;
-}
-
 void DebugStackedLanguageManager::newStack(std::string name)
 {
     m_manager.newStack(name);

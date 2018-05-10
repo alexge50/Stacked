@@ -26,8 +26,8 @@
 class Addition: public Expression
 {
 public:
-	Addition();
-	virtual ~Addition();
+	Addition() = default;
+	virtual ~Addition() = default;
 
 	virtual void Run(IStackedLanguageManager*) override;
 };

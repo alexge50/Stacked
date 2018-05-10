@@ -33,8 +33,14 @@ enum ErrorType
 class Error
 {
 public:
-	Error(ErrorType, int line, int column, std::string message);
-	virtual ~Error();
+	Error(ErrorType errorType, int line, int column, std::string message):
+		m_errorType(errorType),
+		m_line(line),
+		m_column(column),
+		m_message(message)
+	{}
+
+	~Error() = default;
 
 public:
 	std::string getPrintableString();

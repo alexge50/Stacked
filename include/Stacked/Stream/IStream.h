@@ -29,8 +29,8 @@ struct StreamPosition
 class IStream
 {
 public:
-	IStream();
-	virtual ~IStream();
+	IStream() = default;
+	virtual ~IStream() = default;
 
 public:
 	virtual char GetCurrentByte() = 0;

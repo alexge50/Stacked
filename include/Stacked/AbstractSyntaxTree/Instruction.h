@@ -26,8 +26,8 @@
 class Instruction
 {
 public:
-	Instruction();
-	virtual ~Instruction();
+	Instruction() = default;
+	virtual ~Instruction() = default;
 
 public:
 	virtual void Run(IStackedLanguageManager*) = 0;

@@ -27,8 +27,8 @@
 class PushStack: public Instruction
 {
 public:
-	PushStack();
-	virtual ~PushStack();
+	PushStack() = default;
+	virtual ~PushStack() = default;
 
 	virtual void Run(IStackedLanguageManager *manager) override;
 

@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/Comparation/NotEmpty.h>
 
-NotEmpty::NotEmpty()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-NotEmpty::~NotEmpty()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void NotEmpty::Run(IStackedLanguageManager* languageManager)
 {

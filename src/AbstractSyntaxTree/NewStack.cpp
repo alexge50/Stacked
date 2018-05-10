@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/NewStack.h>
 
-NewStack::NewStack()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-NewStack::~NewStack()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void NewStack::Run(IStackedLanguageManager *manager)
 {

@@ -26,8 +26,8 @@
 class ResetStack: public Instruction
 {
 public:
-	ResetStack();
-	virtual ~ResetStack();
+	ResetStack() = default;
+	virtual ~ResetStack() = default;
 
 	virtual void Run(IStackedLanguageManager *manager) override;
 

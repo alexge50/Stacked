@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/Expression/Multiplication.h>
 
-Multiplication::Multiplication()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-Multiplication::~Multiplication()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void Multiplication::Run(IStackedLanguageManager* languageManager)
 {

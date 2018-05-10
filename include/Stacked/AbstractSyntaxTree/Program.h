@@ -26,8 +26,9 @@
 class Program: public InstructionBlock
 {
 public:
-	Program();
-	virtual ~Program();
+	Program() = default;
+
+	~Program() override = default;
 };
 
 #endif /* SRC_ABSTRACT_SYNTAX_TREE_PROGRAM_H_ */

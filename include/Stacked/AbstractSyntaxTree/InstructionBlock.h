@@ -28,8 +28,8 @@
 class InstructionBlock: public Instruction
 {
 public:
-	InstructionBlock();
-	virtual ~InstructionBlock();
+	InstructionBlock() = default;
+	virtual ~InstructionBlock() = default;
 
 	virtual void Run(IStackedLanguageManager*) override;
 

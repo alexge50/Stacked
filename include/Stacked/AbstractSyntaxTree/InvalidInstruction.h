@@ -26,8 +26,8 @@
 class InvalidInstruction: Instruction
 {
 public:
-	InvalidInstruction();
-	virtual ~InvalidInstruction();
+	InvalidInstruction() = default;
+	virtual ~InvalidInstruction() = default;
 
 public:
 	virtual void Run(IStackedLanguageManager*) override;

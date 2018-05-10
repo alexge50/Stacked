@@ -27,8 +27,8 @@
 class If: public InstructionBlock
 {
 public:
-	If();
-	virtual ~If();
+	If() = default;
+	virtual ~If() = default;
 
 	virtual void Run(IStackedLanguageManager*) override;
 

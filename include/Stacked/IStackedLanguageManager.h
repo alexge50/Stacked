@@ -32,7 +32,6 @@ class IStackedLanguageManager
 public:
 	virtual ~IStackedLanguageManager() = default;
 
-
 	/*stack operations*/
 	virtual void newStack(std::string) = 0;
 	virtual int nextElement(std::string) = 0;

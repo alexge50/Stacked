@@ -26,8 +26,8 @@
 class SignalInstruction: public Instruction
 {
 public:
-	SignalInstruction();
-	virtual ~SignalInstruction();
+	SignalInstruction() = default;
+	virtual ~SignalInstruction() = default;
 
 	virtual void Run(IStackedLanguageManager*) override;
 

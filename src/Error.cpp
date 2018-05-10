@@ -23,20 +23,6 @@
 #include <sstream>
 #include <algorithm>
 
-Error::Error(ErrorType errorType, int line, int column, std::string message)
-{
-	// TODO Auto-generated constructor stub
-	m_errorType = errorType;
-	m_line = line;
-	m_column = column;
-	m_message = message;
-}
-
-Error::~Error()
-{
-	// TODO Auto-generated destructor stub
-}
-
 std::string Error::getPrintableString()
 {
 	std::string errorTypes[3] = {"", "Parsing Error", "Runtime Error"};

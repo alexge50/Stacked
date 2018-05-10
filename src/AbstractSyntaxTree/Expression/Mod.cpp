@@ -21,17 +21,6 @@
 #include <Stacked/AbstractSyntaxTree/Expression/Mod.h>
 
 
-Mod::Mod()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-Mod::~Mod()
-{
-	// TODO Auto-generated destructor stub
-}
-
 void Mod::Run(IStackedLanguageManager* languageManager)
 {
 	int left, right;

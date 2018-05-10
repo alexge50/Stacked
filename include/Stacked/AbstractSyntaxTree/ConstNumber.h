@@ -26,8 +26,8 @@
 class ConstNumber: public Expression
 {
 public:
-	ConstNumber();
-	virtual ~ConstNumber();
+	ConstNumber() = default;
+	virtual ~ConstNumber() = default;
 
 	virtual void Run(IStackedLanguageManager*) override;
 

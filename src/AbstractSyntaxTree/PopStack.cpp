@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/PopStack.h>
 
-PopStack::PopStack()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-PopStack::~PopStack()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void PopStack::Run(IStackedLanguageManager *manager)
 {

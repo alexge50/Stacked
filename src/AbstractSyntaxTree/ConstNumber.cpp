@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/ConstNumber.h>
 
-ConstNumber::ConstNumber()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-ConstNumber::~ConstNumber()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void ConstNumber::Run(IStackedLanguageManager*)
 {

@@ -26,8 +26,8 @@
 class Expression: public Instruction
 {
 public:
-	Expression();
-	virtual ~Expression();
+	Expression() = default;
+	virtual ~Expression() = default;
 
 	virtual void Run(IStackedLanguageManager*) = 0;
 

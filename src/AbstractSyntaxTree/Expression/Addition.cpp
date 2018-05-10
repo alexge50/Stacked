@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/Expression/Addition.h>
 
-Addition::Addition()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-Addition::~Addition()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void Addition::Run(IStackedLanguageManager* languageManager)
 {

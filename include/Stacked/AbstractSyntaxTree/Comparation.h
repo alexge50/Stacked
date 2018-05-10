@@ -26,8 +26,8 @@
 class Comparation: public Instruction
 {
 public:
-	Comparation();
-	virtual ~Comparation();
+	Comparation() = default;
+	virtual ~Comparation() = default;
 
 	virtual void Run(IStackedLanguageManager*) = 0;
 

@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/InstructionBlock.h>
 
-InstructionBlock::InstructionBlock()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-InstructionBlock::~InstructionBlock()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void InstructionBlock::Run(IStackedLanguageManager* languageManager)
 {
@@ -38,10 +28,10 @@ void InstructionBlock::Run(IStackedLanguageManager* languageManager)
 
 void InstructionBlock::RunInstructionBlock(IStackedLanguageManager* languageManager)
 {
-	for(int i = 0; i < m_instructionList.size(); i++)
+	for (auto &i : m_instructionList)
 	{
-		if(m_instructionList[i] != NULL)
-			m_instructionList[i]->Run(languageManager);
+		if(i != NULL)
+			i->Run(languageManager);
 		else printf("error, <NULL> instruction\n");
 	}
 }

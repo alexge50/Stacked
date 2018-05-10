@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/Comparation/NotEqual.h>
 
-NotEqual::NotEqual()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-NotEqual::~NotEqual()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void NotEqual::Run(IStackedLanguageManager* languageManager)
 {

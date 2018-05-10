@@ -32,7 +32,6 @@ set(LIBRARY_SOURCE_FILES
         include/Stacked/AbstractSyntaxTree/Expression.h
         src/AbstractSyntaxTree/If.cpp
         include/Stacked/AbstractSyntaxTree/If.h
-        src/AbstractSyntaxTree/Instruction.cpp
         include/Stacked/AbstractSyntaxTree/Instruction.h
         src/AbstractSyntaxTree/InstructionBlock.cpp
         include/Stacked/AbstractSyntaxTree/InstructionBlock.h
@@ -44,7 +43,6 @@ set(LIBRARY_SOURCE_FILES
         include/Stacked/AbstractSyntaxTree/NextElement.h
         src/AbstractSyntaxTree/PopStack.cpp
         include/Stacked/AbstractSyntaxTree/PopStack.h
-        src/AbstractSyntaxTree/Program.cpp
         include/Stacked/AbstractSyntaxTree/Program.h
         src/AbstractSyntaxTree/PushStack.cpp
         include/Stacked/AbstractSyntaxTree/PushStack.h
@@ -56,7 +54,6 @@ set(LIBRARY_SOURCE_FILES
         include/Stacked/AbstractSyntaxTree/While.h
         src/Stream/FileStream.cpp
         include/Stacked/Stream/FileStream.h
-        src/Stream/IStream.cpp
         include/Stacked/Stream/IStream.h
         include/Stacked/AbstractSyntaxTree.h
         include/Stacked/LanguageVersion.h
@@ -69,7 +66,8 @@ set(LIBRARY_SOURCE_FILES
         include/Stacked/IStackedLanguageManager.h
         src/StackedLanguageManager.cpp
         include/Stacked/StackedLanguageManager.h
-        src/Stack.cpp include/Stacked/Stack.h
+        src/Stack.cpp
+        include/Stacked/Stack.h
         )
 
 set(SOURCE_FILES
@@ -90,6 +88,9 @@ include_directories(include)
 add_executable(Stacked ${SOURCE_FILES} ${LIBRARY_SOURCE_FILES})
 add_library(stacked STATIC ${LIBRARY_SOURCE_FILES})
 add_library(stacked_shared SHARED ${LIBRARY_SOURCE_FILES})
+
+set_property(TARGET stacked PROPERTY POSITION_INDEPENDENT_CODE ON)
+set_property(TARGET stacked_shared PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 install(DIRECTORY include/Stacked DESTINATION include)
 install(TARGETS Stacked DESTINATION bin)

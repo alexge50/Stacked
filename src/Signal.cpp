@@ -21,15 +21,9 @@
 #include <Stacked/Signal.h>
 #include <Stacked/IStackedLanguageManager.h>
 
-Signal::Signal()
-{
-	// TODO Auto-generated constructor stub
-}
+Signal::Signal() = default;
 
-Signal::~Signal()
-{
-	// TODO Auto-generated destructor stub
-}
+Signal::~Signal() = default;
 
 Stack* Signal::getStack(std::string name)
 {

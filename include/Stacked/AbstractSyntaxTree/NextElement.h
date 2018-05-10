@@ -26,8 +26,8 @@
 class NextElement: public Expression
 {
 public:
-	NextElement();
-	virtual ~NextElement();
+	NextElement() = default;
+	virtual ~NextElement() = default;
 
 	virtual void Run(IStackedLanguageManager*) override;
 

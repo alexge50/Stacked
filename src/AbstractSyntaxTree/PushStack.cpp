@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/PushStack.h>
 
-PushStack::PushStack()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-PushStack::~PushStack()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void PushStack::Run(IStackedLanguageManager *manager)
 {

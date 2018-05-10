@@ -26,8 +26,8 @@
 class Multiplication: public Expression
 {
 public:
-	Multiplication();
-	virtual ~Multiplication();
+	Multiplication() = default;
+	virtual ~Multiplication() = default;
 
 	virtual void Run(IStackedLanguageManager*) override;
 };

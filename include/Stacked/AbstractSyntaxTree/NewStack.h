@@ -26,8 +26,8 @@
 class NewStack: public Instruction
 {
 public:
-	NewStack();
-	virtual ~NewStack();
+	NewStack() = default;
+	virtual ~NewStack() = default;
 
 	virtual void Run(IStackedLanguageManager *manager) override;
 

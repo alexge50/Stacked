@@ -26,8 +26,8 @@
 class GreaterThan: public Comparation
 {
 public:
-	GreaterThan();
-	virtual ~GreaterThan();
+	GreaterThan() = default;
+	virtual ~GreaterThan() = default;
 
 	virtual void Run(IStackedLanguageManager*) override;
 };

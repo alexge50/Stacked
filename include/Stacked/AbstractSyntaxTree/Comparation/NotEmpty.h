@@ -26,8 +26,8 @@
 class NotEmpty: public Comparation
 {
 public:
-	NotEmpty();
-	virtual ~NotEmpty();
+	NotEmpty() = default;
+	virtual ~NotEmpty() = default;
 
 	virtual void Run(IStackedLanguageManager*) override;
 };

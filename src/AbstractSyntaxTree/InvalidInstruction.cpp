@@ -18,19 +18,8 @@
  */
 
 #include <Stacked/AbstractSyntaxTree/InvalidInstruction.h>
-
 #include <Stacked/Error.h>
 
-InvalidInstruction::InvalidInstruction()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-InvalidInstruction::~InvalidInstruction()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void InvalidInstruction::Run(IStackedLanguageManager*)
 {

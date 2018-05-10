@@ -26,8 +26,8 @@
 class Mod: public Expression
 {
 public:
-	Mod();
-	virtual ~Mod();
+	Mod() = default;
+	virtual ~Mod() = default;
 
 	virtual void Run(IStackedLanguageManager*) override;
 };

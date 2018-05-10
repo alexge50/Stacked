@@ -26,8 +26,8 @@
 class PopStack: public Instruction
 {
 public:
-	PopStack();
-	virtual ~PopStack();
+	PopStack() = default;
+	virtual ~PopStack() = default;
 
 	virtual void Run(IStackedLanguageManager *manager) override;
 

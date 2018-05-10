@@ -26,8 +26,8 @@
 class Equal: public Comparation
 {
 public:
-	Equal();
-	virtual ~Equal();
+	Equal() = default;
+	virtual ~Equal() = default;
 
 	virtual void Run(IStackedLanguageManager*) override;
 };

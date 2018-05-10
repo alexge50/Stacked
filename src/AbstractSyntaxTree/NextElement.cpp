@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/NextElement.h>
 
-NextElement::NextElement()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-NextElement::~NextElement()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void NextElement::Run(IStackedLanguageManager* languageManager)
 {

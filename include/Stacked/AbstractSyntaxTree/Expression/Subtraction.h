@@ -26,8 +26,8 @@
 class Subtraction: public Expression
 {
 public:
-	Subtraction();
-	virtual ~Subtraction();
+	Subtraction() = default;
+	virtual ~Subtraction() = default;
 
 	virtual void Run(IStackedLanguageManager*) override;
 };

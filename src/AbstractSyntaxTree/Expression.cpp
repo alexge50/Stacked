@@ -20,16 +20,6 @@
 
 #include <Stacked/AbstractSyntaxTree/Expression.h>
 
-Expression::Expression()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-Expression::~Expression()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void Expression::Operands(Expression* left, Expression* right)
 {

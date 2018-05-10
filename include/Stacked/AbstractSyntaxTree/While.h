@@ -27,8 +27,8 @@
 class While: public InstructionBlock
 {
 public:
-	While();
-	virtual ~While();
+	While() = default;
+	virtual ~While() = default;
 
 	virtual void Run(IStackedLanguageManager*) override;
 

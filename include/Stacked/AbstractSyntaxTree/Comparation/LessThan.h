@@ -26,8 +26,8 @@
 class LessThan: public Comparation
 {
 public:
-	LessThan();
-	virtual ~LessThan();
+	LessThan() = default;
+	virtual ~LessThan() = default;
 
 	virtual void Run(IStackedLanguageManager*) override;
 };

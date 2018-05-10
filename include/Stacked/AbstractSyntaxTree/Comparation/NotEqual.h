@@ -26,8 +26,8 @@
 class NotEqual: public Comparation
 {
 public:
-	NotEqual();
-	virtual ~NotEqual();
+	NotEqual() = default;
+	virtual ~NotEqual() = default;
 
 	virtual void Run(IStackedLanguageManager*) override;
 };

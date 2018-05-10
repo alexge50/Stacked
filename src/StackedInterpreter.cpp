@@ -28,7 +28,6 @@
 
 StackedInterpreter::StackedInterpreter()
 {
-	// TODO Auto-generated constructor stub
 	stream = NULL;
 
 	InstructionMap['%'] = std::bind(&StackedInterpreter::newInstruction, this);
@@ -50,10 +49,7 @@ StackedInterpreter::StackedInterpreter()
 
 }
 
-StackedInterpreter::~StackedInterpreter()
-{
-	// TODO Auto-generated destructor stub
-}
+StackedInterpreter::~StackedInterpreter() = default;
 
 void StackedInterpreter::setStream(IStream* s)
 {

@@ -21,16 +21,6 @@
 
 #include <Stacked/AbstractSyntaxTree/Comparation/GreaterThan.h>
 
-GreaterThan::GreaterThan()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-GreaterThan::~GreaterThan()
-{
-	// TODO Auto-generated destructor stub
-}
 
 void GreaterThan::Run(IStackedLanguageManager* languageManager)
 {

@@ -34,7 +34,11 @@ enum DebugLevel
 class DebugStackedLanguageManager : public IStackedLanguageManager
 {
 public:
-    DebugStackedLanguageManager(FILE *debugFile, DebugLevel debugLevel);
+    DebugStackedLanguageManager(FILE *debugFile, DebugLevel debugLevel):
+        m_debugFile(debugFile),
+        m_debugLevel(debugLevel)
+    {}
+
     virtual ~DebugStackedLanguageManager() = default;
 
     /*stack operations*/
